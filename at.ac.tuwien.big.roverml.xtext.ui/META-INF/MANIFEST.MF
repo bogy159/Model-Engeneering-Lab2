@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: at.ac.tuwien.big.roverml.xtext.ui
+Bundle-ManifestVersion: 2
+Bundle-Name: at.ac.tuwien.big.roverml.xtext.ui
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: at.ac.tuwien.big.roverml.xtext.ui; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: at.ac.tuwien.big.roverml.xtext,
+ at.ac.tuwien.big.roverml.xtext.ide,
+ at.ac.tuwien.big.roverml,
+ org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.xtext.ui.codetemplates.ui,
+ org.eclipse.ui.editors;bundle-version="3.5.0",
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.ui,
+ org.eclipse.compare,
+ org.eclipse.xtext.builder,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtend.lib;resolution:=optional
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: at.ac.tuwien.big.roverml.xtext.ui.internal,
+ at.ac.tuwien.big.ui.quickfix,
+ at.ac.tuwien.big.ui.contentassist
+Bundle-Activator: at.ac.tuwien.big.roverml.xtext.ui.internal.XtextActivator

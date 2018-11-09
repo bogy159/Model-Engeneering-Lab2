@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated roverml -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="at.ac.tuwien.big.roverml.presentation.RoverMLModelWizardID"
+            name="%_UI_RoverMLModelWizard_label"
+            class="at.ac.tuwien.big.roverml.presentation.RoverMLModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/RoverMLModelFile.gif">
+         <description>%_UI_RoverMLModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated roverml -->
+      <editor
+            id="at.ac.tuwien.big.roverml.presentation.RoverMLEditorID"
+            name="%_UI_RoverMLEditor_label"
+            icon="icons/full/obj16/RoverMLModelFile.gif"
+            extensions="roverml"
+            class="at.ac.tuwien.big.roverml.presentation.RoverMLEditor"
+            contributorClass="at.ac.tuwien.big.roverml.presentation.RoverMLActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

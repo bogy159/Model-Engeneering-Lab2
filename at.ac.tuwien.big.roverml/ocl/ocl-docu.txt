@@ -1,0 +1,12 @@
+* Constraint 01 (atLeastOneMotor): A rover must have at least one motor
+* Constraint 02 (repeatAtLeastOnce): A repeat block must be executed at least once, but -1 is allowed for infinite repeats
+* Constraint 03 (noParallelExecution): If there are two or more outgoing transitions at most one is allowed to be a regular transition, the others must be triggered (to prevent parallel execution of commands)
+* Constraint 04 (atLeastOneIncomingTransition): Every command of a block except one (start command) must have at least one incoming transition
+* Constraint 05 (noOutgoingTransition): The command "Terminate" should not have any outgoing transitions
+* Constraint 06 (sourceAndTargetInSameBlock): Transition source and target must be in same block
+* Constraint 07 (onlyTerminateOnce): The "Terminate" command should only be defined once per block
+* Constraint 08 (notNegative): The value of a TimeQuantity should not be negative
+* Constraint 09 (doNotRotateTwiceInARow): The rotate command should not be executed twice in succession, e.g. instead of rotating 45 degrees twice, just rotate 90 degrees
+* Constraint 10 (triggeredTransitionAfterInfiniteCommand): After an infinite command (i.e. move without distance, repeat with count -1) there must be a triggered transition
+* Constraint 11 (uniqueName): All components must have a unique name
+* Constraint 12 (positiveOrNegative): The value for the speed of the move command should be <> 0 (e.g. either move forward or backward, don't just stand there)

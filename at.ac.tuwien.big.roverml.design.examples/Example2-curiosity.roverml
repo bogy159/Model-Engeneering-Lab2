@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<at.ac.tuwien.big.roverml:RoverSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:at.ac.tuwien.big.roverml="http://www.big.tuwien.ac.at/roverml">
+  <rovers name="Curiosity">
+    <components xsi:type="at.ac.tuwien.big.roverml:GPS" name="digiPos"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:DistanceSensor" name="FrontSensor"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Compass" name="digiComp"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Light" name="Light1" kind="LED"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Motor" name="mainMotor"/>
+  </rovers>
+  <roverPrograms name="Mars" rover="//@rovers.0">
+    <block>
+      <commands xsi:type="at.ac.tuwien.big.roverml:Move">
+        <speed value="5.0" velocityUnit="cm_per_s"/>
+        <distance value="20.0" lengthUnit="cm"/>
+      </commands>
+      <commands xsi:type="at.ac.tuwien.big.roverml:Wait">
+        <duration value="10.0" timeUnit="s"/>
+      </commands>
+      <commands xsi:type="at.ac.tuwien.big.roverml:Terminate"/>
+      <commands xsi:type="at.ac.tuwien.big.roverml:Rotate">
+        <angle value="60.0" angleUnit="degree"/>
+      </commands>
+      <commands xsi:type="at.ac.tuwien.big.roverml:Repeat" count="5">
+        <commands xsi:type="at.ac.tuwien.big.roverml:SetLightColor" name="RedLight" color="red" lights="//@rovers.0/@components.3"/>
+        <commands xsi:type="at.ac.tuwien.big.roverml:SetLightColor" name="BlueLight" color="blue" lights="//@rovers.0/@components.3"/>
+        <transitions xsi:type="at.ac.tuwien.big.roverml:GpsTrigger" source="//@roverPrograms.0/@block/@commands.4/@commands.1" target="//@roverPrograms.0/@block/@commands.4/@commands.0"/>
+      </commands>
+      <transitions source="//@roverPrograms.0/@block/@commands.0" target="//@roverPrograms.0/@block/@commands.4"/>
+      <transitions xsi:type="at.ac.tuwien.big.roverml:CompassTrigger" source="//@roverPrograms.0/@block/@commands.0" target="//@roverPrograms.0/@block/@commands.2"/>
+      <transitions xsi:type="at.ac.tuwien.big.roverml:DistanceSensorTrigger" source="//@roverPrograms.0/@block/@commands.0" target="//@roverPrograms.0/@block/@commands.1"/>
+      <transitions xsi:type="at.ac.tuwien.big.roverml:DistanceSensorTrigger" source="//@roverPrograms.0/@block/@commands.1" target="//@roverPrograms.0/@block/@commands.4"/>
+      <transitions source="//@roverPrograms.0/@block/@commands.4" target="//@roverPrograms.0/@block/@commands.3"/>
+      <transitions source="//@roverPrograms.0/@block/@commands.3" target="//@roverPrograms.0/@block/@commands.2"/>
+    </block>
+  </roverPrograms>
+</at.ac.tuwien.big.roverml:RoverSystem>

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    name="roverml" nsURI="http://www.big.tuwien.ac.at/roverml" nsPrefix="at.ac.tuwien.big.roverml">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RoverProgram" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="block" lowerBound="1" eType="#//Block" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rover" lowerBound="1" eType="#//Rover"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Command" abstract="true" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="noParallelExecution"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="noParallelExecution" value="if not self.oclIsKindOf(Block) and self.outgoing->size() > 1 then&#xA;&#x9;&#x9;&#x9;self.outgoing->select(t | t.oclIsTypeOf(Transition))->size() &lt;= 1 else true&#xA;&#x9;&#x9;&#x9;endif"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incoming" upperBound="-1" eType="#//Transition" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="derivation" value="self.Block.transitions->select(target = self)"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoing" upperBound="-1" eType="#//Transition" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="derivation" value="self.Block.transitions->select(source = self)"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Move" eSuperTypes="#//Command">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="speed" lowerBound="1" eType="#//Velocity" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="distance" eType="#//Length" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SetLightColor" eSuperTypes="#//Command">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="color" eType="#//Color"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="lights" lowerBound="1" upperBound="-1" eType="#//Light"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Rotate" eSuperTypes="#//Command">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="angle" lowerBound="1" eType="#//Angle" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Wait" eSuperTypes="#//Command">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="duration" lowerBound="1" eType="#//Time" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Repeat" eSuperTypes="#//Command #//Block">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="repeatAtLeastOnce"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="repeatAtLeastOnce" value="self.count > 0 or self.count = - 1"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="count" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="0"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Color">
+    <eLiterals name="none"/>
+    <eLiterals name="red" value="1"/>
+    <eLiterals name="green" value="2"/>
+    <eLiterals name="blue" value="3"/>
+    <eLiterals name="yellow" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Rover" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="atLeastOneMotor uniqueName"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="atLeastOneMotor" value="self.components->select(component | component.oclIsTypeOf(Motor))->size() > 0"/>
+      <details key="uniqueName" value="self.components->forAll(c1, c2 | c1 &lt;> c2 implies c1.name &lt;> c2.name)"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1" eType="#//Component" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Block">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="onlyTerminateOnce atLeastOneIncomingTransition"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="onlyTerminateOnce" value="self.commands->select(command | command.oclIsTypeOf(Terminate))->size() &lt;= 1"/>
+      <details key="atLeastOneIncomingTransition" value="(self.commands -> size() - self.transitions.target -> asSet() -> size()) &lt;= 1"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="commands" upperBound="-1" eType="#//Command" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" upperBound="-1" eType="#//Transition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="sourceAndTargetInSameBlock triggeredTransitionAfterInfiniteCommand doNotRotateTwiceInARow"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="sourceAndTargetInSameBlock" value="self.source.Block = self.target.Block"/>
+      <details key="triggeredTransitionAfterInfiniteCommand" value="&#xA;&#x9;&#x9;&#x9;if&#xA;&#x9;&#x9;&#x9;&#x9;(self.source.oclIsKindOf(Move) and self.source.oclAsType(Move).distance.oclIsUndefined()) &#xA;&#x9;&#x9;&#x9;&#x9;xor&#xA;&#x9;&#x9;&#x9;&#x9;(self.source.oclIsKindOf(Repeat) and self.source.oclAsType(Repeat).count = -1)&#xA;&#x9;&#x9;&#x9;then &#xA;&#x9;&#x9;&#x9;&#x9;self.oclIsKindOf(TriggeredTransition)&#xA;&#x9;&#x9;&#x9;else&#xA;&#x9;&#x9;&#x9;&#x9;true&#xA;&#x9;&#x9;&#x9;endif"/>
+      <details key="doNotRotateTwiceInARow" value="if self.source.oclIsTypeOf(Rotate) then not self.target.oclIsTypeOf(Rotate) else true endif"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1" eType="#//Command"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1" eType="#//Command"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TriggeredTransition" abstract="true" eSuperTypes="#//Transition">
+    <eTypeParameters name="SensorType">
+      <eBounds eClassifier="#//Sensor">
+        <eTypeArguments eTypeParameter="#//TriggeredTransition/QuantityType"/>
+      </eBounds>
+    </eTypeParameters>
+    <eTypeParameters name="QuantityType">
+      <eBounds eClassifier="#//Quantity"/>
+    </eTypeParameters>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sensor" lowerBound="1">
+      <eGenericType eTypeParameter="#//TriggeredTransition/SensorType"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" lowerBound="1" eType="#//ComparisonOperator"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="comparisonValue" lowerBound="1" containment="true">
+      <eGenericType eTypeParameter="#//TriggeredTransition/QuantityType"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GPS">
+    <eGenericSuperTypes eClassifier="#//Sensor">
+      <eTypeArguments eClassifier="#//Position"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DistanceSensor">
+    <eGenericSuperTypes eClassifier="#//Sensor">
+      <eTypeArguments eClassifier="#//Length"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Compass">
+    <eGenericSuperTypes eClassifier="#//Sensor">
+      <eTypeArguments eClassifier="#//Angle"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SingleQuantity" abstract="true" eSuperTypes="#//Quantity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TimeUnit">
+    <eLiterals name="ns"/>
+    <eLiterals name="ms" value="1"/>
+    <eLiterals name="s" value="2"/>
+    <eLiterals name="min" value="3"/>
+    <eLiterals name="h" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Time" eSuperTypes="#//SingleQuantity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="notNegative"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="notNegative" value="self.value > 0"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeUnit" lowerBound="1" eType="#//TimeUnit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Angle" eSuperTypes="#//SingleQuantity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="angleUnit" lowerBound="1" eType="#//AngleUnit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Velocity" eSuperTypes="#//SingleQuantity">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="positiveOrNegative"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="positiveOrNegative" value="self.value &lt;> 0"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="velocityUnit" lowerBound="1" eType="#//VelocityUnit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Light" eSuperTypes="#//Actuator"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="AngleUnit">
+    <eLiterals name="radian"/>
+    <eLiterals name="degree" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="VelocityUnit">
+    <eLiterals name="mm_per_s"/>
+    <eLiterals name="cm_per_s" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Length" eSuperTypes="#//SingleQuantity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lengthUnit" lowerBound="1" eType="#//LengthUnit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="LengthUnit">
+    <eLiterals name="mm"/>
+    <eLiterals name="cm" value="1"/>
+    <eLiterals name="m" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ComparisonOperator">
+    <eLiterals name="smaller"/>
+    <eLiterals name="equals" value="1"/>
+    <eLiterals name="greater" value="2"/>
+    <eLiterals name="unequal" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Sensor" abstract="true" eSuperTypes="#//Component">
+    <eTypeParameters name="QuantityType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="lastSensedValue" containment="true">
+      <eGenericType eTypeParameter="#//Sensor/QuantityType"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Motor" eSuperTypes="#//Actuator"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Terminate" eSuperTypes="#//Command">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="noOutgoingTransition"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="noOutgoingTransition" value="self.outgoing->isEmpty()"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true" eSuperTypes="#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Actuator" abstract="true" eSuperTypes="#//Component"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RoverSystem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rovers" upperBound="-1" eType="#//Rover" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="roverPrograms" upperBound="-1" eType="#//RoverProgram" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DistanceSensorTrigger">
+    <eGenericSuperTypes eClassifier="#//TriggeredTransition">
+      <eTypeArguments eClassifier="#//DistanceSensor"/>
+      <eTypeArguments eClassifier="#//Length"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GpsTrigger">
+    <eGenericSuperTypes eClassifier="#//TriggeredTransition">
+      <eTypeArguments eClassifier="#//GPS"/>
+      <eTypeArguments eClassifier="#//Position"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CompassTrigger">
+    <eGenericSuperTypes eClassifier="#//TriggeredTransition">
+      <eTypeArguments eClassifier="#//Compass"/>
+      <eTypeArguments eClassifier="#//Angle"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Quantity" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Position" eSuperTypes="#//Quantity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="x" lowerBound="1" eType="#//Length" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="y" lowerBound="1" eType="#//Length" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<at.ac.tuwien.big.roverml:RoverProgram
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:at.ac.tuwien.big.roverml="http://www.big.tuwien.ac.at/roverml"
+    xsi:schemaLocation="http://www.big.tuwien.ac.at/roverml ../model/roverml.ecore">
+  <block>
+    <commands
+        xsi:type="at.ac.tuwien.big.roverml:Repeat"/>
+  </block>
+  <rover href="oclRover.xmi#/"/>
+</at.ac.tuwien.big.roverml:RoverProgram>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<at.ac.tuwien.big.roverml:RoverProgram
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:at.ac.tuwien.big.roverml="http://www.big.tuwien.ac.at/roverml"
+    xsi:schemaLocation="http://www.big.tuwien.ac.at/roverml ../model/roverml.ecore"
+    name="">
+  <block>
+    <commands
+        xsi:type="at.ac.tuwien.big.roverml:Move">
+      <speed
+          value="1.0"
+          velocityUnit="cm_per_s"/>
+    </commands>
+    <commands
+        xsi:type="at.ac.tuwien.big.roverml:Wait">
+      <duration
+          value="1.0"
+          timeUnit="s"/>
+    </commands>
+    <transitions
+        source="//@block/@commands.0"
+        target="//@block/@commands.1"/>
+  </block>
+  <rover href="oclRover.xmi#/"/>
+</at.ac.tuwien.big.roverml:RoverProgram>

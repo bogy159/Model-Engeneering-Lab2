@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<at.ac.tuwien.big.roverml:Rover
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:at.ac.tuwien.big.roverml="http://www.big.tuwien.ac.at/roverml"
+    xsi:schemaLocation="http://www.big.tuwien.ac.at/roverml ../model/roverml.ecore"
+    name="OCL Rover 2">
+  <components
+      xsi:type="at.ac.tuwien.big.roverml:Motor"
+      name="mot1"/>
+  <components
+      xsi:type="at.ac.tuwien.big.roverml:Light"
+      name="mot1"/>
+  <components
+      xsi:type="at.ac.tuwien.big.roverml:DistanceSensor"
+      name="sensor1"/>
+</at.ac.tuwien.big.roverml:Rover>

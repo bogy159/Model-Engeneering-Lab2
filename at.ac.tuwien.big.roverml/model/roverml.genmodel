@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/at.ac.tuwien.big.roverml/src-gen" editDirectory="/at.ac.tuwien.big.roverml.edit/src-gen"
+    editorDirectory="/at.ac.tuwien.big.roverml.editor/src-gen" modelPluginID="at.ac.tuwien.big.roverml"
+    modelName="Roverml" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>roverml.ecore</foreignModel>
+  <genPackages prefix="RoverML" basePackage="at.ac.tuwien.big" disposableProviderFactory="true"
+      generateExampleClass="false" childCreationExtenders="true" ecorePackage="roverml.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="roverml.ecore#//Color">
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//Color/none"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//Color/red"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//Color/green"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//Color/blue"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//Color/yellow"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="roverml.ecore#//TimeUnit">
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//TimeUnit/ns"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//TimeUnit/ms"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//TimeUnit/s"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//TimeUnit/min"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//TimeUnit/h"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="roverml.ecore#//AngleUnit">
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//AngleUnit/radian"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//AngleUnit/degree"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="roverml.ecore#//VelocityUnit">
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//VelocityUnit/mm_per_s"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//VelocityUnit/cm_per_s"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="roverml.ecore#//LengthUnit">
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//LengthUnit/mm"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//LengthUnit/cm"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//LengthUnit/m"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="roverml.ecore#//ComparisonOperator">
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//ComparisonOperator/smaller"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//ComparisonOperator/equals"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//ComparisonOperator/greater"/>
+      <genEnumLiterals ecoreEnumLiteral="roverml.ecore#//ComparisonOperator/unequal"/>
+    </genEnums>
+    <genClasses image="false" ecoreClass="roverml.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute roverml.ecore#//NamedElement/name"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//RoverProgram">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference roverml.ecore#//RoverProgram/block"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference roverml.ecore#//RoverProgram/rover"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="roverml.ecore#//Command">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference roverml.ecore#//Command/incoming"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference roverml.ecore#//Command/outgoing"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Move">
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference roverml.ecore#//Move/speed"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference roverml.ecore#//Move/distance"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//SetLightColor">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute roverml.ecore#//SetLightColor/color"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference roverml.ecore#//SetLightColor/lights"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Rotate">
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference roverml.ecore#//Rotate/angle"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Wait">
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference roverml.ecore#//Wait/duration"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Repeat">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute roverml.ecore#//Repeat/count"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Rover">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference roverml.ecore#//Rover/components"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Block">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference roverml.ecore#//Block/commands"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference roverml.ecore#//Block/transitions"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Transition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference roverml.ecore#//Transition/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference roverml.ecore#//Transition/target"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//TriggeredTransition">
+      <genTypeParameters ecoreTypeParameter="roverml.ecore#//TriggeredTransition/SensorType"/>
+      <genTypeParameters ecoreTypeParameter="roverml.ecore#//TriggeredTransition/QuantityType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference roverml.ecore#//TriggeredTransition/sensor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute roverml.ecore#//TriggeredTransition/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference roverml.ecore#//TriggeredTransition/comparisonValue"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//GPS"/>
+    <genClasses ecoreClass="roverml.ecore#//DistanceSensor"/>
+    <genClasses ecoreClass="roverml.ecore#//Compass"/>
+    <genClasses image="false" ecoreClass="roverml.ecore#//SingleQuantity">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute roverml.ecore#//SingleQuantity/value"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Time">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute roverml.ecore#//Time/timeUnit"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Angle">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute roverml.ecore#//Angle/angleUnit"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Velocity">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute roverml.ecore#//Velocity/velocityUnit"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Light"/>
+    <genClasses ecoreClass="roverml.ecore#//Length">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute roverml.ecore#//Length/lengthUnit"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="roverml.ecore#//Sensor">
+      <genTypeParameters ecoreTypeParameter="roverml.ecore#//Sensor/QuantityType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference roverml.ecore#//Sensor/lastSensedValue"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Motor"/>
+    <genClasses ecoreClass="roverml.ecore#//Terminate"/>
+    <genClasses ecoreClass="roverml.ecore#//Component">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute roverml.ecore#//Component/kind"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//Actuator"/>
+    <genClasses ecoreClass="roverml.ecore#//RoverSystem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference roverml.ecore#//RoverSystem/rovers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference roverml.ecore#//RoverSystem/roverPrograms"/>
+    </genClasses>
+    <genClasses ecoreClass="roverml.ecore#//DistanceSensorTrigger"/>
+    <genClasses ecoreClass="roverml.ecore#//GpsTrigger"/>
+    <genClasses ecoreClass="roverml.ecore#//CompassTrigger"/>
+    <genClasses ecoreClass="roverml.ecore#//Quantity"/>
+    <genClasses ecoreClass="roverml.ecore#//Position">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference roverml.ecore#//Position/x"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference roverml.ecore#//Position/y"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
