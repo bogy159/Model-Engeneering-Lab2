@@ -3,9 +3,135 @@ grammar at.ac.tuwien.big.Roverml with org.eclipse.xtext.common.Terminals
 import "http://www.big.tuwien.ac.at/roverml"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
+NamedElement returns NamedElement:
+	Rover | RoverProgram | Component | Command
+;
+
 RoverSystem returns RoverSystem:
 	{RoverSystem}
-	'roverSystem'
+		(rovers+=Rover)*
+		(roverPrograms+=RoverProgram)*		
+;
+
+RoverProgram returns RoverProgram:
+	{RoverProgram}
+	block=Block		
+;
+
+Command returns Command:
+	Move | Rotate | Wait | SetLightColor| Terminate | Repeat	
+	incoming+=[Transition|QualifiedName] '>'
+		outgoing+=[Transition|QualifiedName]		
+;
+
+Move returns Move:
+	'move'
+	'{'
+		speed=Velocity
+		distance=Length		
+	'}'
+;
+
+SetLightColor returns SetLightColor:
+	'setLightColor'
+	'{'
+		'color' color=Color
+		lights+=[Light|QualifiedName]
+	'}'
+;
+
+Rotate returns Rotate:
+	'rotate'
+	angle=Angle
+;
+
+Wait returns Wait:
+	'wait'
+	duration=Time
+;
+
+Repeat returns Repeat:
+	'count' count=EInt	
+;
+
+enum Color:	
+	none = 'None' | none = '0' |
+	red = 'move' | red = '1' |
+	green = 'Green' | green = '2' |
+	blue = 'Blue' | blue = '3' |
+	yellow = 'Yellow' | yellow = '4' 
+;
+
+Rover returns Rover:
+	{Rover}
+	(components+=Component)*
+;
+
+Block returns Block:
+	Repeat | {Block}
+	'repeat'	
+	(commands+=Command)*
+	(transitions+=Transition)*
+;
+
+Transition returns Transition:
+	TriggeredTransition | {Transition}
+	source=[Command|QualifiedName] '>'
+		target=[Command|QualifiedName]
+;
+
+TriggeredTransition returns TriggeredTransition:
+	SensorType | QuantityType
+	('sensor' sensor=[TriggeredTransition|QualifiedName])?
+	'operator' operator=ComparisonOperator
+;
+
+QuantityType returns TriggeredTransition:
+	
+;
+
+SensorType returns TriggeredTransition:
+	
+;
+
+enum ComparisonOperator:
+	
+;
+
+Time:
+	
+;
+
+Angle:
+	
+;
+
+Light:
+	
+;
+
+Length:
+	
+;
+
+Velocity:
+	
+;
+
+Terminate returns Terminate:
+	
+;
+
+Component returns Component:
+	Sensor | Actuator
+;
+
+Actuator:
+	
+;
+
+Sensor:
+	
 ;
 
 QualifiedName returns ecore::EString:
