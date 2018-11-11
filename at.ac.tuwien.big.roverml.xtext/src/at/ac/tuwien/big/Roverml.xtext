@@ -7,12 +7,6 @@ NamedElement returns NamedElement:
 	Rover | RoverProgram | Component | Command
 ;
 
-RoverSystem returns RoverSystem:
-	{RoverSystem}
-		(rovers+=Rover)*
-		(roverPrograms+=RoverProgram)*		
-;
-
 RoverProgram returns RoverProgram:
 	{RoverProgram}
 	block=Block		
@@ -81,57 +75,141 @@ Transition returns Transition:
 ;
 
 TriggeredTransition returns TriggeredTransition:
-	SensorType | QuantityType
-	('sensor' sensor=[TriggeredTransition|QualifiedName])?
+	DistanceSensorTrigger | GpsTrigger | CompassTrigger
+	('sensor' sensor=[Sensor|QualifiedName])?
 	'operator' operator=ComparisonOperator
+	('comparisonValue' comparisonValue=Quantity)?
 ;
 
-QuantityType returns TriggeredTransition:
+QuantityType returns Quantity:
 	
 ;
 
-SensorType returns TriggeredTransition:
+SensorType returns Sensor:
 	
+;
+
+SensorQuantityType returns Sensor:
+	SensorType
+	
+;
+
+GPS returns GPS:
+	{GPS}
+;
+
+DistanceSensor returns DistanceSensor:
+	{DistanceSensor}
+;
+
+Compass returns Sensor:
+	{Compass}
+;
+
+SingleQuantity returns SingleQuantity:
+	Time | Velocity | Angle | Length
+	'value' value=EFloat
+;
+
+enum TimeUnit:	
+	ns = 'Ns' | ns = '0' |
+	ms = 'Ms' | ms = '1' |
+	s = 'S' | s = '2' |
+	min = 'Min' | min = '3' |
+	h = 'H' | h = '4' 
+;
+
+Time returns Time:
+	'timeUnit' timeUnit=TimeUnit
+;
+
+Angle returns Angle:
+	'angleUnit'angleUnit=AngleUnit
+;
+
+Velocity returns Velocity:
+	'velocityUnit' velocityUnit=VelocityUnit
+;
+
+Light returns Light:
+	{Light}
+;
+
+enum AngleUnit:
+	radian = 'Radian' | radian = '0' |
+	degree = 'Degree' | degree = '1' 
+;
+
+enum VelocityUnit:
+	mm_per_s = 'Mm_per_s' | mm_per_s = '0' |
+	cm_per_s = 'Cm_per_s' | cm_per_s = '1' 
+;
+
+Length returns Length:
+	'lengthUnit' lengthUnit=LengthUnit
+;
+
+enum LengthUnit:
+	mm = 'Mm' | mm = '0' |
+	cm = 'Cm' | cm = '1' |
+	m = 'M' | m = '2' 
 ;
 
 enum ComparisonOperator:
-	
+	smaller = 'Smaller' | smaller = '0' |
+	equals = 'Equals' | equals = '1' |
+	greater = 'Greater' | greater = '2' |
+	unequal = 'Unequal' | unequal = '3' 
 ;
 
-Time:
-	
+Sensor returns Sensor:
+	GPS | DistanceSensor | Compass
+	lastSensedValue=QuantityType
 ;
 
-Angle:
-	
-;
-
-Light:
-	
-;
-
-Length:
-	
-;
-
-Velocity:
-	
+Motor returns Motor:
+	{Motor}
 ;
 
 Terminate returns Terminate:
-	
+	{Terminate}
 ;
 
 Component returns Component:
-	Sensor | Actuator
+	SensorQuantityType | Actuator | Sensor
+	'kind' kind=EString
 ;
 
-Actuator:
-	
+Actuator returns Actuator:
+	Light | Motor	
 ;
 
-Sensor:
-	
+RoverSystem returns RoverSystem:
+	{RoverSystem}
+		(rovers+=Rover)*
+		(roverPrograms+=RoverProgram)*		
+;
+
+DistanceSensorTrigger returns DistanceSensorTrigger:
+	{DistanceSensorTrigger}
+;
+
+GpsTrigger returns GpsTrigger:
+	{GpsTrigger}
+;
+
+CompassTrigger returns CompassTrigger:
+	{CompassTrigger}
+;
+
+Quantity returns Quantity:
+	QuantityType | Position | SingleQuantity	
+;
+
+Position returns Position:
+	{Position}
+	('x' x=Length)
+	('y' y=Length)
 ;
 
 QualifiedName returns ecore::EString:
