@@ -3,8 +3,31 @@
  */
 package at.ac.tuwien.big.serializer;
 
+import at.ac.tuwien.big.roverml.Angle;
+import at.ac.tuwien.big.roverml.Block;
+import at.ac.tuwien.big.roverml.Compass;
+import at.ac.tuwien.big.roverml.CompassTrigger;
+import at.ac.tuwien.big.roverml.DistanceSensor;
+import at.ac.tuwien.big.roverml.DistanceSensorTrigger;
+import at.ac.tuwien.big.roverml.GPS;
+import at.ac.tuwien.big.roverml.GpsTrigger;
+import at.ac.tuwien.big.roverml.Length;
+import at.ac.tuwien.big.roverml.Light;
+import at.ac.tuwien.big.roverml.Motor;
+import at.ac.tuwien.big.roverml.Move;
+import at.ac.tuwien.big.roverml.Position;
+import at.ac.tuwien.big.roverml.Repeat;
+import at.ac.tuwien.big.roverml.Rotate;
+import at.ac.tuwien.big.roverml.Rover;
 import at.ac.tuwien.big.roverml.RoverMLPackage;
+import at.ac.tuwien.big.roverml.RoverProgram;
 import at.ac.tuwien.big.roverml.RoverSystem;
+import at.ac.tuwien.big.roverml.SetLightColor;
+import at.ac.tuwien.big.roverml.Terminate;
+import at.ac.tuwien.big.roverml.Time;
+import at.ac.tuwien.big.roverml.Transition;
+import at.ac.tuwien.big.roverml.Velocity;
+import at.ac.tuwien.big.roverml.Wait;
 import at.ac.tuwien.big.services.RovermlGrammarAccess;
 import com.google.inject.Inject;
 import java.util.Set;
@@ -14,7 +37,9 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
 public class RovermlSemanticSequencer extends AbstractDelegatingSemanticSequencer {
@@ -30,8 +55,132 @@ public class RovermlSemanticSequencer extends AbstractDelegatingSemanticSequence
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == RoverMLPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case RoverMLPackage.ANGLE:
+				sequence_Angle(context, (Angle) semanticObject); 
+				return; 
+			case RoverMLPackage.BLOCK:
+				sequence_Block(context, (Block) semanticObject); 
+				return; 
+			case RoverMLPackage.COMPASS:
+				if (rule == grammarAccess.getCompassRule()) {
+					sequence_Compass(context, (Compass) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getNamedElementRule()
+						|| rule == grammarAccess.getComponentRule()) {
+					sequence_Compass_Component_Sensor(context, (Compass) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSensorRule()) {
+					sequence_Compass_Sensor(context, (Compass) semanticObject); 
+					return; 
+				}
+				else break;
+			case RoverMLPackage.COMPASS_TRIGGER:
+				if (rule == grammarAccess.getCompassTriggerRule()) {
+					sequence_CompassTrigger(context, (CompassTrigger) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTransitionRule()
+						|| rule == grammarAccess.getTriggeredTransitionRule()) {
+					sequence_CompassTrigger_TriggeredTransition(context, (CompassTrigger) semanticObject); 
+					return; 
+				}
+				else break;
+			case RoverMLPackage.DISTANCE_SENSOR:
+				if (rule == grammarAccess.getNamedElementRule()
+						|| rule == grammarAccess.getComponentRule()) {
+					sequence_Component_DistanceSensor(context, (DistanceSensor) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDistanceSensorRule()
+						|| rule == grammarAccess.getSensorRule()) {
+					sequence_DistanceSensor(context, (DistanceSensor) semanticObject); 
+					return; 
+				}
+				else break;
+			case RoverMLPackage.DISTANCE_SENSOR_TRIGGER:
+				sequence_DistanceSensorTrigger(context, (DistanceSensorTrigger) semanticObject); 
+				return; 
+			case RoverMLPackage.GPS:
+				if (rule == grammarAccess.getNamedElementRule()
+						|| rule == grammarAccess.getComponentRule()) {
+					sequence_Component_GPS(context, (GPS) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getGPSRule()
+						|| rule == grammarAccess.getSensorRule()) {
+					sequence_GPS(context, (GPS) semanticObject); 
+					return; 
+				}
+				else break;
+			case RoverMLPackage.GPS_TRIGGER:
+				sequence_GpsTrigger(context, (GpsTrigger) semanticObject); 
+				return; 
+			case RoverMLPackage.LENGTH:
+				if (rule == grammarAccess.getLengthRule()) {
+					sequence_Length(context, (Length) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSingleQuantityRule()
+						|| rule == grammarAccess.getQuantityRule()) {
+					sequence_Length_SingleQuantity(context, (Length) semanticObject); 
+					return; 
+				}
+				else break;
+			case RoverMLPackage.LIGHT:
+				sequence_Light(context, (Light) semanticObject); 
+				return; 
+			case RoverMLPackage.MOTOR:
+				sequence_Motor(context, (Motor) semanticObject); 
+				return; 
+			case RoverMLPackage.MOVE:
+				sequence_Move(context, (Move) semanticObject); 
+				return; 
+			case RoverMLPackage.POSITION:
+				sequence_Position(context, (Position) semanticObject); 
+				return; 
+			case RoverMLPackage.REPEAT:
+				if (rule == grammarAccess.getNamedElementRule()
+						|| rule == grammarAccess.getCommandRule()) {
+					sequence_Command_Repeat(context, (Repeat) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getRepeatRule()
+						|| rule == grammarAccess.getBlockRule()) {
+					sequence_Repeat(context, (Repeat) semanticObject); 
+					return; 
+				}
+				else break;
+			case RoverMLPackage.ROTATE:
+				sequence_Rotate(context, (Rotate) semanticObject); 
+				return; 
+			case RoverMLPackage.ROVER:
+				sequence_Rover(context, (Rover) semanticObject); 
+				return; 
+			case RoverMLPackage.ROVER_PROGRAM:
+				sequence_RoverProgram(context, (RoverProgram) semanticObject); 
+				return; 
 			case RoverMLPackage.ROVER_SYSTEM:
 				sequence_RoverSystem(context, (RoverSystem) semanticObject); 
+				return; 
+			case RoverMLPackage.SET_LIGHT_COLOR:
+				sequence_SetLightColor(context, (SetLightColor) semanticObject); 
+				return; 
+			case RoverMLPackage.TERMINATE:
+				sequence_Terminate(context, (Terminate) semanticObject); 
+				return; 
+			case RoverMLPackage.TIME:
+				sequence_Time(context, (Time) semanticObject); 
+				return; 
+			case RoverMLPackage.TRANSITION:
+				sequence_Transition(context, (Transition) semanticObject); 
+				return; 
+			case RoverMLPackage.VELOCITY:
+				sequence_Velocity(context, (Velocity) semanticObject); 
+				return; 
+			case RoverMLPackage.WAIT:
+				sequence_Wait(context, (Wait) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -40,13 +189,522 @@ public class RovermlSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     SingleQuantity returns Angle
+	 *     Angle returns Angle
+	 *     Quantity returns Angle
+	 *
+	 * Constraint:
+	 *     angleUnit=AngleUnit
+	 */
+	protected void sequence_Angle(ISerializationContext context, Angle semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.ANGLE__ANGLE_UNIT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.ANGLE__ANGLE_UNIT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAngleAccess().getAngleUnitAngleUnitEnumRuleCall_1_0(), semanticObject.getAngleUnit());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Block returns Block
+	 *
+	 * Constraint:
+	 *     (commands+=Command* transitions+=Transition*)
+	 */
+	protected void sequence_Block(ISerializationContext context, Block semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns Repeat
+	 *     Command returns Repeat
+	 *
+	 * Constraint:
+	 *     (count=EInt incoming+=[Transition|QualifiedName] outgoing+=[Transition|QualifiedName])
+	 */
+	protected void sequence_Command_Repeat(ISerializationContext context, Repeat semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     CompassTrigger returns CompassTrigger
+	 *
+	 * Constraint:
+	 *     {CompassTrigger}
+	 */
+	protected void sequence_CompassTrigger(ISerializationContext context, CompassTrigger semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Transition returns CompassTrigger
+	 *     TriggeredTransition returns CompassTrigger
+	 *
+	 * Constraint:
+	 *     (sensor=[Sensor|QualifiedName]? operator=ComparisonOperator comparisonValue=Quantity?)
+	 */
+	protected void sequence_CompassTrigger_TriggeredTransition(ISerializationContext context, CompassTrigger semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Compass returns Compass
+	 *
+	 * Constraint:
+	 *     {Compass}
+	 */
+	protected void sequence_Compass(ISerializationContext context, Compass semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns Compass
+	 *     Component returns Compass
+	 *
+	 * Constraint:
+	 *     (lastSensedValue=Quantity kind=EString)
+	 */
+	protected void sequence_Compass_Component_Sensor(ISerializationContext context, Compass semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.SENSOR__LAST_SENSED_VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.SENSOR__LAST_SENSED_VALUE));
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.COMPONENT__KIND) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.COMPONENT__KIND));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSensorAccess().getLastSensedValueQuantityParserRuleCall_2_3_0(), semanticObject.getLastSensedValue());
+		feeder.accept(grammarAccess.getComponentAccess().getKindEStringParserRuleCall_1_4_0(), semanticObject.getKind());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Sensor returns Compass
+	 *
+	 * Constraint:
+	 *     lastSensedValue=Quantity
+	 */
+	protected void sequence_Compass_Sensor(ISerializationContext context, Compass semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.SENSOR__LAST_SENSED_VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.SENSOR__LAST_SENSED_VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSensorAccess().getLastSensedValueQuantityParserRuleCall_2_3_0(), semanticObject.getLastSensedValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns DistanceSensor
+	 *     Component returns DistanceSensor
+	 *
+	 * Constraint:
+	 *     kind=EString
+	 */
+	protected void sequence_Component_DistanceSensor(ISerializationContext context, DistanceSensor semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.COMPONENT__KIND) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.COMPONENT__KIND));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getComponentAccess().getKindEStringParserRuleCall_1_4_0(), semanticObject.getKind());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns GPS
+	 *     Component returns GPS
+	 *
+	 * Constraint:
+	 *     kind=EString
+	 */
+	protected void sequence_Component_GPS(ISerializationContext context, GPS semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.COMPONENT__KIND) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.COMPONENT__KIND));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getComponentAccess().getKindEStringParserRuleCall_1_4_0(), semanticObject.getKind());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Transition returns DistanceSensorTrigger
+	 *     TriggeredTransition returns DistanceSensorTrigger
+	 *     DistanceSensorTrigger returns DistanceSensorTrigger
+	 *
+	 * Constraint:
+	 *     {DistanceSensorTrigger}
+	 */
+	protected void sequence_DistanceSensorTrigger(ISerializationContext context, DistanceSensorTrigger semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DistanceSensor returns DistanceSensor
+	 *     Sensor returns DistanceSensor
+	 *
+	 * Constraint:
+	 *     {DistanceSensor}
+	 */
+	protected void sequence_DistanceSensor(ISerializationContext context, DistanceSensor semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     GPS returns GPS
+	 *     Sensor returns GPS
+	 *
+	 * Constraint:
+	 *     {GPS}
+	 */
+	protected void sequence_GPS(ISerializationContext context, GPS semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Transition returns GpsTrigger
+	 *     TriggeredTransition returns GpsTrigger
+	 *     GpsTrigger returns GpsTrigger
+	 *
+	 * Constraint:
+	 *     {GpsTrigger}
+	 */
+	protected void sequence_GpsTrigger(ISerializationContext context, GpsTrigger semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Length returns Length
+	 *
+	 * Constraint:
+	 *     lengthUnit=LengthUnit
+	 */
+	protected void sequence_Length(ISerializationContext context, Length semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.LENGTH__LENGTH_UNIT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.LENGTH__LENGTH_UNIT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getLengthAccess().getLengthUnitLengthUnitEnumRuleCall_3_0(), semanticObject.getLengthUnit());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SingleQuantity returns Length
+	 *     Quantity returns Length
+	 *
+	 * Constraint:
+	 *     (lengthUnit=LengthUnit value=EFloat)
+	 */
+	protected void sequence_Length_SingleQuantity(ISerializationContext context, Length semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.LENGTH__LENGTH_UNIT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.LENGTH__LENGTH_UNIT));
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.SINGLE_QUANTITY__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.SINGLE_QUANTITY__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getLengthAccess().getLengthUnitLengthUnitEnumRuleCall_3_0(), semanticObject.getLengthUnit());
+		feeder.accept(grammarAccess.getSingleQuantityAccess().getValueEFloatParserRuleCall_3_4_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns Light
+	 *     Light returns Light
+	 *     Component returns Light
+	 *     Actuator returns Light
+	 *
+	 * Constraint:
+	 *     {Light}
+	 */
+	protected void sequence_Light(ISerializationContext context, Light semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns Motor
+	 *     Motor returns Motor
+	 *     Component returns Motor
+	 *     Actuator returns Motor
+	 *
+	 * Constraint:
+	 *     {Motor}
+	 */
+	protected void sequence_Motor(ISerializationContext context, Motor semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns Move
+	 *     Command returns Move
+	 *     Move returns Move
+	 *
+	 * Constraint:
+	 *     (speed=Velocity distance=Length)
+	 */
+	protected void sequence_Move(ISerializationContext context, Move semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.MOVE__SPEED) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.MOVE__SPEED));
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.MOVE__DISTANCE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.MOVE__DISTANCE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMoveAccess().getSpeedVelocityParserRuleCall_2_0(), semanticObject.getSpeed());
+		feeder.accept(grammarAccess.getMoveAccess().getDistanceLengthParserRuleCall_3_0(), semanticObject.getDistance());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Quantity returns Position
+	 *     Position returns Position
+	 *
+	 * Constraint:
+	 *     (x=Length y=Length)
+	 */
+	protected void sequence_Position(ISerializationContext context, Position semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.POSITION__X) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.POSITION__X));
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.POSITION__Y) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.POSITION__Y));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPositionAccess().getXLengthParserRuleCall_3_1_0(), semanticObject.getX());
+		feeder.accept(grammarAccess.getPositionAccess().getYLengthParserRuleCall_4_1_0(), semanticObject.getY());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Repeat returns Repeat
+	 *     Block returns Repeat
+	 *
+	 * Constraint:
+	 *     count=EInt
+	 */
+	protected void sequence_Repeat(ISerializationContext context, Repeat semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.REPEAT__COUNT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.REPEAT__COUNT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRepeatAccess().getCountEIntParserRuleCall_4_0(), semanticObject.getCount());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns Rotate
+	 *     Command returns Rotate
+	 *     Rotate returns Rotate
+	 *
+	 * Constraint:
+	 *     angle=Angle
+	 */
+	protected void sequence_Rotate(ISerializationContext context, Rotate semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.ROTATE__ANGLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.ROTATE__ANGLE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRotateAccess().getAngleAngleParserRuleCall_2_0(), semanticObject.getAngle());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns RoverProgram
+	 *     RoverProgram returns RoverProgram
+	 *
+	 * Constraint:
+	 *     block=Block
+	 */
+	protected void sequence_RoverProgram(ISerializationContext context, RoverProgram semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.ROVER_PROGRAM__BLOCK) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.ROVER_PROGRAM__BLOCK));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRoverProgramAccess().getBlockBlockParserRuleCall_2_0(), semanticObject.getBlock());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     RoverSystem returns RoverSystem
 	 *
 	 * Constraint:
-	 *     {RoverSystem}
+	 *     (rovers+=Rover* roverPrograms+=RoverProgram*)
 	 */
 	protected void sequence_RoverSystem(ISerializationContext context, RoverSystem semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns Rover
+	 *     Rover returns Rover
+	 *
+	 * Constraint:
+	 *     components+=Component*
+	 */
+	protected void sequence_Rover(ISerializationContext context, Rover semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns SetLightColor
+	 *     Command returns SetLightColor
+	 *     SetLightColor returns SetLightColor
+	 *
+	 * Constraint:
+	 *     (color=Color lights+=[Light|QualifiedName])
+	 */
+	protected void sequence_SetLightColor(ISerializationContext context, SetLightColor semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns Terminate
+	 *     Command returns Terminate
+	 *     Terminate returns Terminate
+	 *
+	 * Constraint:
+	 *     {Terminate}
+	 */
+	protected void sequence_Terminate(ISerializationContext context, Terminate semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SingleQuantity returns Time
+	 *     Time returns Time
+	 *     Quantity returns Time
+	 *
+	 * Constraint:
+	 *     timeUnit=TimeUnit
+	 */
+	protected void sequence_Time(ISerializationContext context, Time semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.TIME__TIME_UNIT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.TIME__TIME_UNIT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTimeAccess().getTimeUnitTimeUnitEnumRuleCall_1_0(), semanticObject.getTimeUnit());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Transition returns Transition
+	 *
+	 * Constraint:
+	 *     (source=[Command|QualifiedName] target=[Command|QualifiedName])
+	 */
+	protected void sequence_Transition(ISerializationContext context, Transition semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.TRANSITION__SOURCE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.TRANSITION__SOURCE));
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.TRANSITION__TARGET) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.TRANSITION__TARGET));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTransitionAccess().getSourceCommandQualifiedNameParserRuleCall_1_2_0_1(), semanticObject.eGet(RoverMLPackage.Literals.TRANSITION__SOURCE, false));
+		feeder.accept(grammarAccess.getTransitionAccess().getTargetCommandQualifiedNameParserRuleCall_1_4_0_1(), semanticObject.eGet(RoverMLPackage.Literals.TRANSITION__TARGET, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SingleQuantity returns Velocity
+	 *     Velocity returns Velocity
+	 *     Quantity returns Velocity
+	 *
+	 * Constraint:
+	 *     velocityUnit=VelocityUnit
+	 */
+	protected void sequence_Velocity(ISerializationContext context, Velocity semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.VELOCITY__VELOCITY_UNIT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.VELOCITY__VELOCITY_UNIT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getVelocityAccess().getVelocityUnitVelocityUnitEnumRuleCall_1_0(), semanticObject.getVelocityUnit());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NamedElement returns Wait
+	 *     Command returns Wait
+	 *     Wait returns Wait
+	 *
+	 * Constraint:
+	 *     duration=Time
+	 */
+	protected void sequence_Wait(ISerializationContext context, Wait semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, RoverMLPackage.Literals.WAIT__DURATION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, RoverMLPackage.Literals.WAIT__DURATION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getWaitAccess().getDurationTimeParserRuleCall_2_0(), semanticObject.getDuration());
+		feeder.finish();
 	}
 	
 	

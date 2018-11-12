@@ -8,6 +8,10 @@ import com.google.inject.Singleton;
 import java.util.List;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.EnumLiteralDeclaration;
+import org.eclipse.xtext.EnumRule;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.Group;
@@ -16,24 +20,1013 @@ import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
+import org.eclipse.xtext.service.AbstractElementFinder.AbstractEnumRuleElementFinder;
 import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
 public class RovermlGrammarAccess extends AbstractGrammarElementFinder {
 	
+	public class NamedElementElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.NamedElement");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cRoverParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cRoverProgramParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cComponentParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cCommandParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		
+		//NamedElement:
+		//	Rover | RoverProgram | Component | Command;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//Rover | RoverProgram | Component | Command
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//Rover
+		public RuleCall getRoverParserRuleCall_0() { return cRoverParserRuleCall_0; }
+		
+		//RoverProgram
+		public RuleCall getRoverProgramParserRuleCall_1() { return cRoverProgramParserRuleCall_1; }
+		
+		//Component
+		public RuleCall getComponentParserRuleCall_2() { return cComponentParserRuleCall_2; }
+		
+		//Command
+		public RuleCall getCommandParserRuleCall_3() { return cCommandParserRuleCall_3; }
+	}
+	public class RoverProgramElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.RoverProgram");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cRoverProgramAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cRoverProgramKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cBlockAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cBlockBlockParserRuleCall_2_0 = (RuleCall)cBlockAssignment_2.eContents().get(0);
+		
+		//RoverProgram:
+		//	{RoverProgram}
+		//	'roverProgram'
+		//	block=Block;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{RoverProgram} 'roverProgram' block=Block
+		public Group getGroup() { return cGroup; }
+		
+		//{RoverProgram}
+		public Action getRoverProgramAction_0() { return cRoverProgramAction_0; }
+		
+		//'roverProgram'
+		public Keyword getRoverProgramKeyword_1() { return cRoverProgramKeyword_1; }
+		
+		//block=Block
+		public Assignment getBlockAssignment_2() { return cBlockAssignment_2; }
+		
+		//Block
+		public RuleCall getBlockBlockParserRuleCall_2_0() { return cBlockBlockParserRuleCall_2_0; }
+	}
+	public class CommandElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Command");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cMoveParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cRotateParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cWaitParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cSetLightColorParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cTerminateParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
+		private final RuleCall cRepeatParserRuleCall_5_0 = (RuleCall)cGroup_5.eContents().get(0);
+		private final Keyword cCommandKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
+		private final Assignment cIncomingAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final CrossReference cIncomingTransitionCrossReference_5_2_0 = (CrossReference)cIncomingAssignment_5_2.eContents().get(0);
+		private final RuleCall cIncomingTransitionQualifiedNameParserRuleCall_5_2_0_1 = (RuleCall)cIncomingTransitionCrossReference_5_2_0.eContents().get(1);
+		private final Keyword cGreaterThanSignKeyword_5_3 = (Keyword)cGroup_5.eContents().get(3);
+		private final Assignment cOutgoingAssignment_5_4 = (Assignment)cGroup_5.eContents().get(4);
+		private final CrossReference cOutgoingTransitionCrossReference_5_4_0 = (CrossReference)cOutgoingAssignment_5_4.eContents().get(0);
+		private final RuleCall cOutgoingTransitionQualifiedNameParserRuleCall_5_4_0_1 = (RuleCall)cOutgoingTransitionCrossReference_5_4_0.eContents().get(1);
+		
+		//Command:
+		//	Move | Rotate | Wait | SetLightColor | Terminate | Repeat
+		//	'command'
+		//	incoming+=[Transition|QualifiedName] '>'
+		//	outgoing+=[Transition|QualifiedName];
+		@Override public ParserRule getRule() { return rule; }
+		
+		//Move | Rotate | Wait | SetLightColor | Terminate | Repeat 'command' incoming+=[Transition|QualifiedName] '>'
+		//outgoing+=[Transition|QualifiedName]
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//Move
+		public RuleCall getMoveParserRuleCall_0() { return cMoveParserRuleCall_0; }
+		
+		//Rotate
+		public RuleCall getRotateParserRuleCall_1() { return cRotateParserRuleCall_1; }
+		
+		//Wait
+		public RuleCall getWaitParserRuleCall_2() { return cWaitParserRuleCall_2; }
+		
+		//SetLightColor
+		public RuleCall getSetLightColorParserRuleCall_3() { return cSetLightColorParserRuleCall_3; }
+		
+		//Terminate
+		public RuleCall getTerminateParserRuleCall_4() { return cTerminateParserRuleCall_4; }
+		
+		//Repeat 'command' incoming+=[Transition|QualifiedName] '>' outgoing+=[Transition|QualifiedName]
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//Repeat
+		public RuleCall getRepeatParserRuleCall_5_0() { return cRepeatParserRuleCall_5_0; }
+		
+		//'command'
+		public Keyword getCommandKeyword_5_1() { return cCommandKeyword_5_1; }
+		
+		//incoming+=[Transition|QualifiedName]
+		public Assignment getIncomingAssignment_5_2() { return cIncomingAssignment_5_2; }
+		
+		//[Transition|QualifiedName]
+		public CrossReference getIncomingTransitionCrossReference_5_2_0() { return cIncomingTransitionCrossReference_5_2_0; }
+		
+		//QualifiedName
+		public RuleCall getIncomingTransitionQualifiedNameParserRuleCall_5_2_0_1() { return cIncomingTransitionQualifiedNameParserRuleCall_5_2_0_1; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_5_3() { return cGreaterThanSignKeyword_5_3; }
+		
+		//outgoing+=[Transition|QualifiedName]
+		public Assignment getOutgoingAssignment_5_4() { return cOutgoingAssignment_5_4; }
+		
+		//[Transition|QualifiedName]
+		public CrossReference getOutgoingTransitionCrossReference_5_4_0() { return cOutgoingTransitionCrossReference_5_4_0; }
+		
+		//QualifiedName
+		public RuleCall getOutgoingTransitionQualifiedNameParserRuleCall_5_4_0_1() { return cOutgoingTransitionQualifiedNameParserRuleCall_5_4_0_1; }
+	}
+	public class MoveElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Move");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cMoveKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cSpeedAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cSpeedVelocityParserRuleCall_2_0 = (RuleCall)cSpeedAssignment_2.eContents().get(0);
+		private final Assignment cDistanceAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cDistanceLengthParserRuleCall_3_0 = (RuleCall)cDistanceAssignment_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//Move:
+		//	'move'
+		//	'{'
+		//	speed=Velocity
+		//	distance=Length
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'move' '{' speed=Velocity distance=Length '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'move'
+		public Keyword getMoveKeyword_0() { return cMoveKeyword_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+		
+		//speed=Velocity
+		public Assignment getSpeedAssignment_2() { return cSpeedAssignment_2; }
+		
+		//Velocity
+		public RuleCall getSpeedVelocityParserRuleCall_2_0() { return cSpeedVelocityParserRuleCall_2_0; }
+		
+		//distance=Length
+		public Assignment getDistanceAssignment_3() { return cDistanceAssignment_3; }
+		
+		//Length
+		public RuleCall getDistanceLengthParserRuleCall_3_0() { return cDistanceLengthParserRuleCall_3_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+	}
+	public class SetLightColorElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.SetLightColor");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cSetLightColorKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cColorKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cColorAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cColorColorEnumRuleCall_3_0 = (RuleCall)cColorAssignment_3.eContents().get(0);
+		private final Assignment cLightsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final CrossReference cLightsLightCrossReference_4_0 = (CrossReference)cLightsAssignment_4.eContents().get(0);
+		private final RuleCall cLightsLightQualifiedNameParserRuleCall_4_0_1 = (RuleCall)cLightsLightCrossReference_4_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//SetLightColor:
+		//	'setLightColor'
+		//	'{'
+		//	'color' color=Color
+		//	lights+=[Light|QualifiedName]
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'setLightColor' '{' 'color' color=Color lights+=[Light|QualifiedName] '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'setLightColor'
+		public Keyword getSetLightColorKeyword_0() { return cSetLightColorKeyword_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+		
+		//'color'
+		public Keyword getColorKeyword_2() { return cColorKeyword_2; }
+		
+		//color=Color
+		public Assignment getColorAssignment_3() { return cColorAssignment_3; }
+		
+		//Color
+		public RuleCall getColorColorEnumRuleCall_3_0() { return cColorColorEnumRuleCall_3_0; }
+		
+		//lights+=[Light|QualifiedName]
+		public Assignment getLightsAssignment_4() { return cLightsAssignment_4; }
+		
+		//[Light|QualifiedName]
+		public CrossReference getLightsLightCrossReference_4_0() { return cLightsLightCrossReference_4_0; }
+		
+		//QualifiedName
+		public RuleCall getLightsLightQualifiedNameParserRuleCall_4_0_1() { return cLightsLightQualifiedNameParserRuleCall_4_0_1; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+	public class RotateElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Rotate");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cRotateKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cAngleAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cAngleAngleParserRuleCall_2_0 = (RuleCall)cAngleAssignment_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//Rotate:
+		//	'rotate'
+		//	'{'
+		//	angle=Angle
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'rotate' '{' angle=Angle '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'rotate'
+		public Keyword getRotateKeyword_0() { return cRotateKeyword_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+		
+		//angle=Angle
+		public Assignment getAngleAssignment_2() { return cAngleAssignment_2; }
+		
+		//Angle
+		public RuleCall getAngleAngleParserRuleCall_2_0() { return cAngleAngleParserRuleCall_2_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
+	}
+	public class WaitElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Wait");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cWaitKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cDurationAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cDurationTimeParserRuleCall_2_0 = (RuleCall)cDurationAssignment_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//Wait:
+		//	'wait'
+		//	'{'
+		//	duration=Time
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'wait' '{' duration=Time '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'wait'
+		public Keyword getWaitKeyword_0() { return cWaitKeyword_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+		
+		//duration=Time
+		public Assignment getDurationAssignment_2() { return cDurationAssignment_2; }
+		
+		//Time
+		public RuleCall getDurationTimeParserRuleCall_2_0() { return cDurationTimeParserRuleCall_2_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
+	}
+	public class RepeatElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Repeat");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cRepeatAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cRepeatKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Keyword cCountKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cCountAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cCountEIntParserRuleCall_4_0 = (RuleCall)cCountAssignment_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//Repeat:
+		//	{Repeat}
+		//	'repeat'
+		//	'{'
+		//	'count' count=EInt
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Repeat} 'repeat' '{' 'count' count=EInt '}'
+		public Group getGroup() { return cGroup; }
+		
+		//{Repeat}
+		public Action getRepeatAction_0() { return cRepeatAction_0; }
+		
+		//'repeat'
+		public Keyword getRepeatKeyword_1() { return cRepeatKeyword_1; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		
+		//'count'
+		public Keyword getCountKeyword_3() { return cCountKeyword_3; }
+		
+		//count=EInt
+		public Assignment getCountAssignment_4() { return cCountAssignment_4; }
+		
+		//EInt
+		public RuleCall getCountEIntParserRuleCall_4_0() { return cCountEIntParserRuleCall_4_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+	public class RoverElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Rover");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cRoverAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cRoverKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cComponentsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cComponentsComponentParserRuleCall_2_0 = (RuleCall)cComponentsAssignment_2.eContents().get(0);
+		
+		//Rover:
+		//	{Rover}
+		//	'rover'
+		//	components+=Component*;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Rover} 'rover' components+=Component*
+		public Group getGroup() { return cGroup; }
+		
+		//{Rover}
+		public Action getRoverAction_0() { return cRoverAction_0; }
+		
+		//'rover'
+		public Keyword getRoverKeyword_1() { return cRoverKeyword_1; }
+		
+		//components+=Component*
+		public Assignment getComponentsAssignment_2() { return cComponentsAssignment_2; }
+		
+		//Component
+		public RuleCall getComponentsComponentParserRuleCall_2_0() { return cComponentsComponentParserRuleCall_2_0; }
+	}
+	public class BlockElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Block");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cRepeatParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Action cBlockAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Keyword cBlockKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Assignment cCommandsAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
+		private final RuleCall cCommandsCommandParserRuleCall_1_3_0 = (RuleCall)cCommandsAssignment_1_3.eContents().get(0);
+		private final Assignment cTransitionsAssignment_1_4 = (Assignment)cGroup_1.eContents().get(4);
+		private final RuleCall cTransitionsTransitionParserRuleCall_1_4_0 = (RuleCall)cTransitionsAssignment_1_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_1_5 = (Keyword)cGroup_1.eContents().get(5);
+		
+		//Block:
+		//	Repeat | {Block}
+		//	'block'
+		//	'{'
+		//	commands+=Command*
+		//	transitions+=Transition*
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//Repeat | {Block} 'block' '{' commands+=Command* transitions+=Transition* '}'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//Repeat
+		public RuleCall getRepeatParserRuleCall_0() { return cRepeatParserRuleCall_0; }
+		
+		//{Block} 'block' '{' commands+=Command* transitions+=Transition* '}'
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{Block}
+		public Action getBlockAction_1_0() { return cBlockAction_1_0; }
+		
+		//'block'
+		public Keyword getBlockKeyword_1_1() { return cBlockKeyword_1_1; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1_2() { return cLeftCurlyBracketKeyword_1_2; }
+		
+		//commands+=Command*
+		public Assignment getCommandsAssignment_1_3() { return cCommandsAssignment_1_3; }
+		
+		//Command
+		public RuleCall getCommandsCommandParserRuleCall_1_3_0() { return cCommandsCommandParserRuleCall_1_3_0; }
+		
+		//transitions+=Transition*
+		public Assignment getTransitionsAssignment_1_4() { return cTransitionsAssignment_1_4; }
+		
+		//Transition
+		public RuleCall getTransitionsTransitionParserRuleCall_1_4_0() { return cTransitionsTransitionParserRuleCall_1_4_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_1_5() { return cRightCurlyBracketKeyword_1_5; }
+	}
+	public class TransitionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Transition");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cTriggeredTransitionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Action cTransitionAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Keyword cTransitionKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cSourceAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final CrossReference cSourceCommandCrossReference_1_2_0 = (CrossReference)cSourceAssignment_1_2.eContents().get(0);
+		private final RuleCall cSourceCommandQualifiedNameParserRuleCall_1_2_0_1 = (RuleCall)cSourceCommandCrossReference_1_2_0.eContents().get(1);
+		private final Keyword cGreaterThanSignKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
+		private final Assignment cTargetAssignment_1_4 = (Assignment)cGroup_1.eContents().get(4);
+		private final CrossReference cTargetCommandCrossReference_1_4_0 = (CrossReference)cTargetAssignment_1_4.eContents().get(0);
+		private final RuleCall cTargetCommandQualifiedNameParserRuleCall_1_4_0_1 = (RuleCall)cTargetCommandCrossReference_1_4_0.eContents().get(1);
+		
+		//Transition:
+		//	TriggeredTransition | {Transition}
+		//	'transition'
+		//	source=[Command|QualifiedName] '>'
+		//	target=[Command|QualifiedName];
+		@Override public ParserRule getRule() { return rule; }
+		
+		//TriggeredTransition | {Transition} 'transition' source=[Command|QualifiedName] '>' target=[Command|QualifiedName]
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//TriggeredTransition
+		public RuleCall getTriggeredTransitionParserRuleCall_0() { return cTriggeredTransitionParserRuleCall_0; }
+		
+		//{Transition} 'transition' source=[Command|QualifiedName] '>' target=[Command|QualifiedName]
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{Transition}
+		public Action getTransitionAction_1_0() { return cTransitionAction_1_0; }
+		
+		//'transition'
+		public Keyword getTransitionKeyword_1_1() { return cTransitionKeyword_1_1; }
+		
+		//source=[Command|QualifiedName]
+		public Assignment getSourceAssignment_1_2() { return cSourceAssignment_1_2; }
+		
+		//[Command|QualifiedName]
+		public CrossReference getSourceCommandCrossReference_1_2_0() { return cSourceCommandCrossReference_1_2_0; }
+		
+		//QualifiedName
+		public RuleCall getSourceCommandQualifiedNameParserRuleCall_1_2_0_1() { return cSourceCommandQualifiedNameParserRuleCall_1_2_0_1; }
+		
+		//'>'
+		public Keyword getGreaterThanSignKeyword_1_3() { return cGreaterThanSignKeyword_1_3; }
+		
+		//target=[Command|QualifiedName]
+		public Assignment getTargetAssignment_1_4() { return cTargetAssignment_1_4; }
+		
+		//[Command|QualifiedName]
+		public CrossReference getTargetCommandCrossReference_1_4_0() { return cTargetCommandCrossReference_1_4_0; }
+		
+		//QualifiedName
+		public RuleCall getTargetCommandQualifiedNameParserRuleCall_1_4_0_1() { return cTargetCommandQualifiedNameParserRuleCall_1_4_0_1; }
+	}
+	public class TriggeredTransitionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.TriggeredTransition");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cDistanceSensorTriggerParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cGpsTriggerParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final RuleCall cCompassTriggerParserRuleCall_2_0 = (RuleCall)cGroup_2.eContents().get(0);
+		private final Keyword cTriggeredTransitionKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cSensorKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cSensorAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final CrossReference cSensorSensorCrossReference_2_2_1_0 = (CrossReference)cSensorAssignment_2_2_1.eContents().get(0);
+		private final RuleCall cSensorSensorQualifiedNameParserRuleCall_2_2_1_0_1 = (RuleCall)cSensorSensorCrossReference_2_2_1_0.eContents().get(1);
+		private final Keyword cOperatorKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		private final Assignment cOperatorAssignment_2_4 = (Assignment)cGroup_2.eContents().get(4);
+		private final RuleCall cOperatorComparisonOperatorEnumRuleCall_2_4_0 = (RuleCall)cOperatorAssignment_2_4.eContents().get(0);
+		private final Group cGroup_2_5 = (Group)cGroup_2.eContents().get(5);
+		private final Keyword cComparisonValueKeyword_2_5_0 = (Keyword)cGroup_2_5.eContents().get(0);
+		private final Assignment cComparisonValueAssignment_2_5_1 = (Assignment)cGroup_2_5.eContents().get(1);
+		private final RuleCall cComparisonValueQuantityParserRuleCall_2_5_1_0 = (RuleCall)cComparisonValueAssignment_2_5_1.eContents().get(0);
+		
+		//TriggeredTransition:
+		//	DistanceSensorTrigger | GpsTrigger | CompassTrigger
+		//	'triggeredTransition' ('sensor' sensor=[Sensor|QualifiedName])?
+		//	'operator' operator=ComparisonOperator ('comparisonValue' comparisonValue=Quantity)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//DistanceSensorTrigger | GpsTrigger | CompassTrigger 'triggeredTransition' ('sensor' sensor=[Sensor|QualifiedName])?
+		//'operator' operator=ComparisonOperator ('comparisonValue' comparisonValue=Quantity)?
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//DistanceSensorTrigger
+		public RuleCall getDistanceSensorTriggerParserRuleCall_0() { return cDistanceSensorTriggerParserRuleCall_0; }
+		
+		//GpsTrigger
+		public RuleCall getGpsTriggerParserRuleCall_1() { return cGpsTriggerParserRuleCall_1; }
+		
+		//CompassTrigger 'triggeredTransition' ('sensor' sensor=[Sensor|QualifiedName])? 'operator' operator=ComparisonOperator
+		//('comparisonValue' comparisonValue=Quantity)?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//CompassTrigger
+		public RuleCall getCompassTriggerParserRuleCall_2_0() { return cCompassTriggerParserRuleCall_2_0; }
+		
+		//'triggeredTransition'
+		public Keyword getTriggeredTransitionKeyword_2_1() { return cTriggeredTransitionKeyword_2_1; }
+		
+		//('sensor' sensor=[Sensor|QualifiedName])?
+		public Group getGroup_2_2() { return cGroup_2_2; }
+		
+		//'sensor'
+		public Keyword getSensorKeyword_2_2_0() { return cSensorKeyword_2_2_0; }
+		
+		//sensor=[Sensor|QualifiedName]
+		public Assignment getSensorAssignment_2_2_1() { return cSensorAssignment_2_2_1; }
+		
+		//[Sensor|QualifiedName]
+		public CrossReference getSensorSensorCrossReference_2_2_1_0() { return cSensorSensorCrossReference_2_2_1_0; }
+		
+		//QualifiedName
+		public RuleCall getSensorSensorQualifiedNameParserRuleCall_2_2_1_0_1() { return cSensorSensorQualifiedNameParserRuleCall_2_2_1_0_1; }
+		
+		//'operator'
+		public Keyword getOperatorKeyword_2_3() { return cOperatorKeyword_2_3; }
+		
+		//operator=ComparisonOperator
+		public Assignment getOperatorAssignment_2_4() { return cOperatorAssignment_2_4; }
+		
+		//ComparisonOperator
+		public RuleCall getOperatorComparisonOperatorEnumRuleCall_2_4_0() { return cOperatorComparisonOperatorEnumRuleCall_2_4_0; }
+		
+		//('comparisonValue' comparisonValue=Quantity)?
+		public Group getGroup_2_5() { return cGroup_2_5; }
+		
+		//'comparisonValue'
+		public Keyword getComparisonValueKeyword_2_5_0() { return cComparisonValueKeyword_2_5_0; }
+		
+		//comparisonValue=Quantity
+		public Assignment getComparisonValueAssignment_2_5_1() { return cComparisonValueAssignment_2_5_1; }
+		
+		//Quantity
+		public RuleCall getComparisonValueQuantityParserRuleCall_2_5_1_0() { return cComparisonValueQuantityParserRuleCall_2_5_1_0; }
+	}
+	public class GPSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.GPS");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cGPSAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cGpsKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//GPS:
+		//	{GPS}
+		//	'gps';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{GPS} 'gps'
+		public Group getGroup() { return cGroup; }
+		
+		//{GPS}
+		public Action getGPSAction_0() { return cGPSAction_0; }
+		
+		//'gps'
+		public Keyword getGpsKeyword_1() { return cGpsKeyword_1; }
+	}
+	public class DistanceSensorElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.DistanceSensor");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDistanceSensorAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cDistanceSensorKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//DistanceSensor:
+		//	{DistanceSensor}
+		//	'DistanceSensor';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{DistanceSensor} 'DistanceSensor'
+		public Group getGroup() { return cGroup; }
+		
+		//{DistanceSensor}
+		public Action getDistanceSensorAction_0() { return cDistanceSensorAction_0; }
+		
+		//'DistanceSensor'
+		public Keyword getDistanceSensorKeyword_1() { return cDistanceSensorKeyword_1; }
+	}
+	public class CompassElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Compass");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cCompassAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cCompassKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//Compass Sensor:
+		//	{Compass}
+		//	'Compass';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Compass} 'Compass'
+		public Group getGroup() { return cGroup; }
+		
+		//{Compass}
+		public Action getCompassAction_0() { return cCompassAction_0; }
+		
+		//'Compass'
+		public Keyword getCompassKeyword_1() { return cCompassKeyword_1; }
+	}
+	public class SingleQuantityElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.SingleQuantity");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cTimeParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cVelocityParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cAngleParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
+		private final RuleCall cLengthParserRuleCall_3_0 = (RuleCall)cGroup_3.eContents().get(0);
+		private final Keyword cSingleQuantityKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
+		private final Keyword cValueKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		private final Assignment cValueAssignment_3_4 = (Assignment)cGroup_3.eContents().get(4);
+		private final RuleCall cValueEFloatParserRuleCall_3_4_0 = (RuleCall)cValueAssignment_3_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3_5 = (Keyword)cGroup_3.eContents().get(5);
+		
+		//SingleQuantity:
+		//	Time | Velocity | Angle | Length
+		//	'SingleQuantity'
+		//	'{'
+		//	'value' value=EFloat
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//Time | Velocity | Angle | Length 'SingleQuantity' '{' 'value' value=EFloat '}'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//Time
+		public RuleCall getTimeParserRuleCall_0() { return cTimeParserRuleCall_0; }
+		
+		//Velocity
+		public RuleCall getVelocityParserRuleCall_1() { return cVelocityParserRuleCall_1; }
+		
+		//Angle
+		public RuleCall getAngleParserRuleCall_2() { return cAngleParserRuleCall_2; }
+		
+		//Length 'SingleQuantity' '{' 'value' value=EFloat '}'
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//Length
+		public RuleCall getLengthParserRuleCall_3_0() { return cLengthParserRuleCall_3_0; }
+		
+		//'SingleQuantity'
+		public Keyword getSingleQuantityKeyword_3_1() { return cSingleQuantityKeyword_3_1; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3_2() { return cLeftCurlyBracketKeyword_3_2; }
+		
+		//'value'
+		public Keyword getValueKeyword_3_3() { return cValueKeyword_3_3; }
+		
+		//value=EFloat
+		public Assignment getValueAssignment_3_4() { return cValueAssignment_3_4; }
+		
+		//EFloat
+		public RuleCall getValueEFloatParserRuleCall_3_4_0() { return cValueEFloatParserRuleCall_3_4_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_3_5() { return cRightCurlyBracketKeyword_3_5; }
+	}
+	public class TimeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Time");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cTimeUnitKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cTimeUnitAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTimeUnitTimeUnitEnumRuleCall_1_0 = (RuleCall)cTimeUnitAssignment_1.eContents().get(0);
+		
+		//Time:
+		//	'timeUnit' timeUnit=TimeUnit;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'timeUnit' timeUnit=TimeUnit
+		public Group getGroup() { return cGroup; }
+		
+		//'timeUnit'
+		public Keyword getTimeUnitKeyword_0() { return cTimeUnitKeyword_0; }
+		
+		//timeUnit=TimeUnit
+		public Assignment getTimeUnitAssignment_1() { return cTimeUnitAssignment_1; }
+		
+		//TimeUnit
+		public RuleCall getTimeUnitTimeUnitEnumRuleCall_1_0() { return cTimeUnitTimeUnitEnumRuleCall_1_0; }
+	}
+	public class AngleElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Angle");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cAngleUnitKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cAngleUnitAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cAngleUnitAngleUnitEnumRuleCall_1_0 = (RuleCall)cAngleUnitAssignment_1.eContents().get(0);
+		
+		//Angle:
+		//	'angleUnit' angleUnit=AngleUnit;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'angleUnit' angleUnit=AngleUnit
+		public Group getGroup() { return cGroup; }
+		
+		//'angleUnit'
+		public Keyword getAngleUnitKeyword_0() { return cAngleUnitKeyword_0; }
+		
+		//angleUnit=AngleUnit
+		public Assignment getAngleUnitAssignment_1() { return cAngleUnitAssignment_1; }
+		
+		//AngleUnit
+		public RuleCall getAngleUnitAngleUnitEnumRuleCall_1_0() { return cAngleUnitAngleUnitEnumRuleCall_1_0; }
+	}
+	public class VelocityElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Velocity");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cVelocityUnitKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cVelocityUnitAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cVelocityUnitVelocityUnitEnumRuleCall_1_0 = (RuleCall)cVelocityUnitAssignment_1.eContents().get(0);
+		
+		//Velocity:
+		//	'velocityUnit' velocityUnit=VelocityUnit;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'velocityUnit' velocityUnit=VelocityUnit
+		public Group getGroup() { return cGroup; }
+		
+		//'velocityUnit'
+		public Keyword getVelocityUnitKeyword_0() { return cVelocityUnitKeyword_0; }
+		
+		//velocityUnit=VelocityUnit
+		public Assignment getVelocityUnitAssignment_1() { return cVelocityUnitAssignment_1; }
+		
+		//VelocityUnit
+		public RuleCall getVelocityUnitVelocityUnitEnumRuleCall_1_0() { return cVelocityUnitVelocityUnitEnumRuleCall_1_0; }
+	}
+	public class LightElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Light");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cLightAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLightKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//Light:
+		//	{Light}
+		//	'light';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Light} 'light'
+		public Group getGroup() { return cGroup; }
+		
+		//{Light}
+		public Action getLightAction_0() { return cLightAction_0; }
+		
+		//'light'
+		public Keyword getLightKeyword_1() { return cLightKeyword_1; }
+	}
+	public class LengthElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Length");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLengthKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cLengthUnitKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cLengthUnitAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cLengthUnitLengthUnitEnumRuleCall_3_0 = (RuleCall)cLengthUnitAssignment_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//Length:
+		//	'length'
+		//	'{'
+		//	'lengthUnit' lengthUnit=LengthUnit
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'length' '{' 'lengthUnit' lengthUnit=LengthUnit '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'length'
+		public Keyword getLengthKeyword_0() { return cLengthKeyword_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+		
+		//'lengthUnit'
+		public Keyword getLengthUnitKeyword_2() { return cLengthUnitKeyword_2; }
+		
+		//lengthUnit=LengthUnit
+		public Assignment getLengthUnitAssignment_3() { return cLengthUnitAssignment_3; }
+		
+		//LengthUnit
+		public RuleCall getLengthUnitLengthUnitEnumRuleCall_3_0() { return cLengthUnitLengthUnitEnumRuleCall_3_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+	}
+	public class SensorElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Sensor");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cGPSParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cDistanceSensorParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final RuleCall cCompassParserRuleCall_2_0 = (RuleCall)cGroup_2.eContents().get(0);
+		private final Keyword cSensorKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Assignment cLastSensedValueAssignment_2_3 = (Assignment)cGroup_2.eContents().get(3);
+		private final RuleCall cLastSensedValueQuantityParserRuleCall_2_3_0 = (RuleCall)cLastSensedValueAssignment_2_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_2_4 = (Keyword)cGroup_2.eContents().get(4);
+		
+		//Sensor:
+		//	GPS | DistanceSensor | Compass
+		//	'sensor'
+		//	'{'
+		//	lastSensedValue=Quantity
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//GPS | DistanceSensor | Compass 'sensor' '{' lastSensedValue=Quantity '}'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//GPS
+		public RuleCall getGPSParserRuleCall_0() { return cGPSParserRuleCall_0; }
+		
+		//DistanceSensor
+		public RuleCall getDistanceSensorParserRuleCall_1() { return cDistanceSensorParserRuleCall_1; }
+		
+		//Compass 'sensor' '{' lastSensedValue=Quantity '}'
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//Compass
+		public RuleCall getCompassParserRuleCall_2_0() { return cCompassParserRuleCall_2_0; }
+		
+		//'sensor'
+		public Keyword getSensorKeyword_2_1() { return cSensorKeyword_2_1; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_2_2() { return cLeftCurlyBracketKeyword_2_2; }
+		
+		//lastSensedValue=Quantity
+		public Assignment getLastSensedValueAssignment_2_3() { return cLastSensedValueAssignment_2_3; }
+		
+		//Quantity
+		public RuleCall getLastSensedValueQuantityParserRuleCall_2_3_0() { return cLastSensedValueQuantityParserRuleCall_2_3_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_2_4() { return cRightCurlyBracketKeyword_2_4; }
+	}
+	public class MotorElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Motor");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cMotorAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cMotorKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//Motor:
+		//	{Motor}
+		//	'motor';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Motor} 'motor'
+		public Group getGroup() { return cGroup; }
+		
+		//{Motor}
+		public Action getMotorAction_0() { return cMotorAction_0; }
+		
+		//'motor'
+		public Keyword getMotorKeyword_1() { return cMotorKeyword_1; }
+	}
+	public class TerminateElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Terminate");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cTerminateAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cTerminateKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//Terminate:
+		//	{Terminate}
+		//	'terminate';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Terminate} 'terminate'
+		public Group getGroup() { return cGroup; }
+		
+		//{Terminate}
+		public Action getTerminateAction_0() { return cTerminateAction_0; }
+		
+		//'terminate'
+		public Keyword getTerminateKeyword_1() { return cTerminateKeyword_1; }
+	}
+	public class ComponentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Component");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cActuatorParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final RuleCall cSensorParserRuleCall_1_0 = (RuleCall)cGroup_1.eContents().get(0);
+		private final Keyword cComponentKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Keyword cKindKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
+		private final Assignment cKindAssignment_1_4 = (Assignment)cGroup_1.eContents().get(4);
+		private final RuleCall cKindEStringParserRuleCall_1_4_0 = (RuleCall)cKindAssignment_1_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_1_5 = (Keyword)cGroup_1.eContents().get(5);
+		
+		//Component:
+		//	Actuator | Sensor
+		//	'component'
+		//	'{'
+		//	'kind' kind=EString
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//Actuator | Sensor 'component' '{' 'kind' kind=EString '}'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//Actuator
+		public RuleCall getActuatorParserRuleCall_0() { return cActuatorParserRuleCall_0; }
+		
+		//Sensor 'component' '{' 'kind' kind=EString '}'
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//Sensor
+		public RuleCall getSensorParserRuleCall_1_0() { return cSensorParserRuleCall_1_0; }
+		
+		//'component'
+		public Keyword getComponentKeyword_1_1() { return cComponentKeyword_1_1; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1_2() { return cLeftCurlyBracketKeyword_1_2; }
+		
+		//'kind'
+		public Keyword getKindKeyword_1_3() { return cKindKeyword_1_3; }
+		
+		//kind=EString
+		public Assignment getKindAssignment_1_4() { return cKindAssignment_1_4; }
+		
+		//EString
+		public RuleCall getKindEStringParserRuleCall_1_4_0() { return cKindEStringParserRuleCall_1_4_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_1_5() { return cRightCurlyBracketKeyword_1_5; }
+	}
+	public class ActuatorElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Actuator");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cLightParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final RuleCall cMotorParserRuleCall_1_0 = (RuleCall)cGroup_1.eContents().get(0);
+		private final Keyword cActuatorKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		
+		//Actuator:
+		//	Light | Motor
+		//	'actuator';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//Light | Motor 'actuator'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//Light
+		public RuleCall getLightParserRuleCall_0() { return cLightParserRuleCall_0; }
+		
+		//Motor 'actuator'
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//Motor
+		public RuleCall getMotorParserRuleCall_1_0() { return cMotorParserRuleCall_1_0; }
+		
+		//'actuator'
+		public Keyword getActuatorKeyword_1_1() { return cActuatorKeyword_1_1; }
+	}
 	public class RoverSystemElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.RoverSystem");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cRoverSystemAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cRoverSystemKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cRoversAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cRoversRoverParserRuleCall_3_0 = (RuleCall)cRoversAssignment_3.eContents().get(0);
+		private final Assignment cRoverProgramsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cRoverProgramsRoverProgramParserRuleCall_4_0 = (RuleCall)cRoverProgramsAssignment_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//RoverSystem:
 		//	{RoverSystem}
-		//	'roverSystem';
+		//	'roverSystem'
+		//	'{'
+		//	rovers+=Rover*
+		//	roverPrograms+=RoverProgram*
+		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{RoverSystem} 'roverSystem'
+		//{RoverSystem} 'roverSystem' '{' rovers+=Rover* roverPrograms+=RoverProgram* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//{RoverSystem}
@@ -41,6 +1034,174 @@ public class RovermlGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'roverSystem'
 		public Keyword getRoverSystemKeyword_1() { return cRoverSystemKeyword_1; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		
+		//rovers+=Rover*
+		public Assignment getRoversAssignment_3() { return cRoversAssignment_3; }
+		
+		//Rover
+		public RuleCall getRoversRoverParserRuleCall_3_0() { return cRoversRoverParserRuleCall_3_0; }
+		
+		//roverPrograms+=RoverProgram*
+		public Assignment getRoverProgramsAssignment_4() { return cRoverProgramsAssignment_4; }
+		
+		//RoverProgram
+		public RuleCall getRoverProgramsRoverProgramParserRuleCall_4_0() { return cRoverProgramsRoverProgramParserRuleCall_4_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+	public class DistanceSensorTriggerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.DistanceSensorTrigger");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDistanceSensorTriggerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cDistanceSensorTriggerKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//DistanceSensorTrigger:
+		//	{DistanceSensorTrigger}
+		//	'DistanceSensorTrigger';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{DistanceSensorTrigger} 'DistanceSensorTrigger'
+		public Group getGroup() { return cGroup; }
+		
+		//{DistanceSensorTrigger}
+		public Action getDistanceSensorTriggerAction_0() { return cDistanceSensorTriggerAction_0; }
+		
+		//'DistanceSensorTrigger'
+		public Keyword getDistanceSensorTriggerKeyword_1() { return cDistanceSensorTriggerKeyword_1; }
+	}
+	public class GpsTriggerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.GpsTrigger");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cGpsTriggerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cGpsTriggerKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//GpsTrigger:
+		//	{GpsTrigger}
+		//	'GpsTrigger';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{GpsTrigger} 'GpsTrigger'
+		public Group getGroup() { return cGroup; }
+		
+		//{GpsTrigger}
+		public Action getGpsTriggerAction_0() { return cGpsTriggerAction_0; }
+		
+		//'GpsTrigger'
+		public Keyword getGpsTriggerKeyword_1() { return cGpsTriggerKeyword_1; }
+	}
+	public class CompassTriggerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.CompassTrigger");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cCompassTriggerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cCompassTriggerKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//CompassTrigger:
+		//	{CompassTrigger}
+		//	'CompassTrigger';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{CompassTrigger} 'CompassTrigger'
+		public Group getGroup() { return cGroup; }
+		
+		//{CompassTrigger}
+		public Action getCompassTriggerAction_0() { return cCompassTriggerAction_0; }
+		
+		//'CompassTrigger'
+		public Keyword getCompassTriggerKeyword_1() { return cCompassTriggerKeyword_1; }
+	}
+	public class QuantityElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Quantity");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cPositionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final RuleCall cSingleQuantityParserRuleCall_1_0 = (RuleCall)cGroup_1.eContents().get(0);
+		private final Keyword cQuantityKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		
+		//Quantity:
+		//	Position | SingleQuantity
+		//	'quantity';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//Position | SingleQuantity 'quantity'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//Position
+		public RuleCall getPositionParserRuleCall_0() { return cPositionParserRuleCall_0; }
+		
+		//SingleQuantity 'quantity'
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//SingleQuantity
+		public RuleCall getSingleQuantityParserRuleCall_1_0() { return cSingleQuantityParserRuleCall_1_0; }
+		
+		//'quantity'
+		public Keyword getQuantityKeyword_1_1() { return cQuantityKeyword_1_1; }
+	}
+	public class PositionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Position");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cPositionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cPositionKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cXKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cXAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cXLengthParserRuleCall_3_1_0 = (RuleCall)cXAssignment_3_1.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cYKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cYAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cYLengthParserRuleCall_4_1_0 = (RuleCall)cYAssignment_4_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//Position:
+		//	{Position}
+		//	'position'
+		//	'{' ('x' x=Length) ('y' y=Length)
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Position} 'position' '{' ('x' x=Length) ('y' y=Length) '}'
+		public Group getGroup() { return cGroup; }
+		
+		//{Position}
+		public Action getPositionAction_0() { return cPositionAction_0; }
+		
+		//'position'
+		public Keyword getPositionKeyword_1() { return cPositionKeyword_1; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		
+		//'x' x=Length
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'x'
+		public Keyword getXKeyword_3_0() { return cXKeyword_3_0; }
+		
+		//x=Length
+		public Assignment getXAssignment_3_1() { return cXAssignment_3_1; }
+		
+		//Length
+		public RuleCall getXLengthParserRuleCall_3_1_0() { return cXLengthParserRuleCall_3_1_0; }
+		
+		//'y' y=Length
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//'y'
+		public Keyword getYKeyword_4_0() { return cYKeyword_4_0; }
+		
+		//y=Length
+		public Assignment getYAssignment_4_1() { return cYAssignment_4_1; }
+		
+		//Length
+		public RuleCall getYLengthParserRuleCall_4_1_0() { return cYLengthParserRuleCall_4_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
 	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.QualifiedName");
@@ -159,8 +1320,464 @@ public class RovermlGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
 	}
 	
+	public class ColorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.Color");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cNoneEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cNoneNoneKeyword_0_0 = (Keyword)cNoneEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cNoneEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cNone0Keyword_1_0 = (Keyword)cNoneEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cRedEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cRedMoveKeyword_2_0 = (Keyword)cRedEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cRedEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cRed1Keyword_3_0 = (Keyword)cRedEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cGreenEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cGreenGreenKeyword_4_0 = (Keyword)cGreenEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cGreenEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cGreen2Keyword_5_0 = (Keyword)cGreenEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cBlueEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cBlueBlueKeyword_6_0 = (Keyword)cBlueEnumLiteralDeclaration_6.eContents().get(0);
+		private final EnumLiteralDeclaration cBlueEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
+		private final Keyword cBlue3Keyword_7_0 = (Keyword)cBlueEnumLiteralDeclaration_7.eContents().get(0);
+		private final EnumLiteralDeclaration cYellowEnumLiteralDeclaration_8 = (EnumLiteralDeclaration)cAlternatives.eContents().get(8);
+		private final Keyword cYellowYellowKeyword_8_0 = (Keyword)cYellowEnumLiteralDeclaration_8.eContents().get(0);
+		private final EnumLiteralDeclaration cYellowEnumLiteralDeclaration_9 = (EnumLiteralDeclaration)cAlternatives.eContents().get(9);
+		private final Keyword cYellow4Keyword_9_0 = (Keyword)cYellowEnumLiteralDeclaration_9.eContents().get(0);
+		
+		//enum Color:
+		//	none='None' | none='0' |
+		//	red='move' | red='1' |
+		//	green='Green' | green='2' |
+		//	blue='Blue' | blue='3' |
+		//	yellow='Yellow' | yellow='4';
+		public EnumRule getRule() { return rule; }
+		
+		//none='None' | none='0' | red='move' | red='1' | green='Green' | green='2' | blue='Blue' | blue='3' | yellow='Yellow' |
+		//yellow='4'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//none='None'
+		public EnumLiteralDeclaration getNoneEnumLiteralDeclaration_0() { return cNoneEnumLiteralDeclaration_0; }
+		
+		//'None'
+		public Keyword getNoneNoneKeyword_0_0() { return cNoneNoneKeyword_0_0; }
+		
+		//none='0'
+		public EnumLiteralDeclaration getNoneEnumLiteralDeclaration_1() { return cNoneEnumLiteralDeclaration_1; }
+		
+		//'0'
+		public Keyword getNone0Keyword_1_0() { return cNone0Keyword_1_0; }
+		
+		//red='move'
+		public EnumLiteralDeclaration getRedEnumLiteralDeclaration_2() { return cRedEnumLiteralDeclaration_2; }
+		
+		//'move'
+		public Keyword getRedMoveKeyword_2_0() { return cRedMoveKeyword_2_0; }
+		
+		//red='1'
+		public EnumLiteralDeclaration getRedEnumLiteralDeclaration_3() { return cRedEnumLiteralDeclaration_3; }
+		
+		//'1'
+		public Keyword getRed1Keyword_3_0() { return cRed1Keyword_3_0; }
+		
+		//green='Green'
+		public EnumLiteralDeclaration getGreenEnumLiteralDeclaration_4() { return cGreenEnumLiteralDeclaration_4; }
+		
+		//'Green'
+		public Keyword getGreenGreenKeyword_4_0() { return cGreenGreenKeyword_4_0; }
+		
+		//green='2'
+		public EnumLiteralDeclaration getGreenEnumLiteralDeclaration_5() { return cGreenEnumLiteralDeclaration_5; }
+		
+		//'2'
+		public Keyword getGreen2Keyword_5_0() { return cGreen2Keyword_5_0; }
+		
+		//blue='Blue'
+		public EnumLiteralDeclaration getBlueEnumLiteralDeclaration_6() { return cBlueEnumLiteralDeclaration_6; }
+		
+		//'Blue'
+		public Keyword getBlueBlueKeyword_6_0() { return cBlueBlueKeyword_6_0; }
+		
+		//blue='3'
+		public EnumLiteralDeclaration getBlueEnumLiteralDeclaration_7() { return cBlueEnumLiteralDeclaration_7; }
+		
+		//'3'
+		public Keyword getBlue3Keyword_7_0() { return cBlue3Keyword_7_0; }
+		
+		//yellow='Yellow'
+		public EnumLiteralDeclaration getYellowEnumLiteralDeclaration_8() { return cYellowEnumLiteralDeclaration_8; }
+		
+		//'Yellow'
+		public Keyword getYellowYellowKeyword_8_0() { return cYellowYellowKeyword_8_0; }
+		
+		//yellow='4'
+		public EnumLiteralDeclaration getYellowEnumLiteralDeclaration_9() { return cYellowEnumLiteralDeclaration_9; }
+		
+		//'4'
+		public Keyword getYellow4Keyword_9_0() { return cYellow4Keyword_9_0; }
+	}
+	public class TimeUnitElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.TimeUnit");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cNsEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cNsNsKeyword_0_0 = (Keyword)cNsEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cNsEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cNs0Keyword_1_0 = (Keyword)cNsEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cMsEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cMsMsKeyword_2_0 = (Keyword)cMsEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cMsEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cMs1Keyword_3_0 = (Keyword)cMsEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cSEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cSSKeyword_4_0 = (Keyword)cSEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cSEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cS2Keyword_5_0 = (Keyword)cSEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cMinEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cMinMinKeyword_6_0 = (Keyword)cMinEnumLiteralDeclaration_6.eContents().get(0);
+		private final EnumLiteralDeclaration cMinEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
+		private final Keyword cMin3Keyword_7_0 = (Keyword)cMinEnumLiteralDeclaration_7.eContents().get(0);
+		private final EnumLiteralDeclaration cHEnumLiteralDeclaration_8 = (EnumLiteralDeclaration)cAlternatives.eContents().get(8);
+		private final Keyword cHHKeyword_8_0 = (Keyword)cHEnumLiteralDeclaration_8.eContents().get(0);
+		private final EnumLiteralDeclaration cHEnumLiteralDeclaration_9 = (EnumLiteralDeclaration)cAlternatives.eContents().get(9);
+		private final Keyword cH4Keyword_9_0 = (Keyword)cHEnumLiteralDeclaration_9.eContents().get(0);
+		
+		//enum TimeUnit:
+		//	ns='Ns' | ns='0' |
+		//	ms='Ms' | ms='1' |
+		//	s='S' | s='2' |
+		//	min='Min' | min='3' |
+		//	h='H' | h='4';
+		public EnumRule getRule() { return rule; }
+		
+		//ns='Ns' | ns='0' | ms='Ms' | ms='1' | s='S' | s='2' | min='Min' | min='3' | h='H' | h='4'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//ns='Ns'
+		public EnumLiteralDeclaration getNsEnumLiteralDeclaration_0() { return cNsEnumLiteralDeclaration_0; }
+		
+		//'Ns'
+		public Keyword getNsNsKeyword_0_0() { return cNsNsKeyword_0_0; }
+		
+		//ns='0'
+		public EnumLiteralDeclaration getNsEnumLiteralDeclaration_1() { return cNsEnumLiteralDeclaration_1; }
+		
+		//'0'
+		public Keyword getNs0Keyword_1_0() { return cNs0Keyword_1_0; }
+		
+		//ms='Ms'
+		public EnumLiteralDeclaration getMsEnumLiteralDeclaration_2() { return cMsEnumLiteralDeclaration_2; }
+		
+		//'Ms'
+		public Keyword getMsMsKeyword_2_0() { return cMsMsKeyword_2_0; }
+		
+		//ms='1'
+		public EnumLiteralDeclaration getMsEnumLiteralDeclaration_3() { return cMsEnumLiteralDeclaration_3; }
+		
+		//'1'
+		public Keyword getMs1Keyword_3_0() { return cMs1Keyword_3_0; }
+		
+		//s='S'
+		public EnumLiteralDeclaration getSEnumLiteralDeclaration_4() { return cSEnumLiteralDeclaration_4; }
+		
+		//'S'
+		public Keyword getSSKeyword_4_0() { return cSSKeyword_4_0; }
+		
+		//s='2'
+		public EnumLiteralDeclaration getSEnumLiteralDeclaration_5() { return cSEnumLiteralDeclaration_5; }
+		
+		//'2'
+		public Keyword getS2Keyword_5_0() { return cS2Keyword_5_0; }
+		
+		//min='Min'
+		public EnumLiteralDeclaration getMinEnumLiteralDeclaration_6() { return cMinEnumLiteralDeclaration_6; }
+		
+		//'Min'
+		public Keyword getMinMinKeyword_6_0() { return cMinMinKeyword_6_0; }
+		
+		//min='3'
+		public EnumLiteralDeclaration getMinEnumLiteralDeclaration_7() { return cMinEnumLiteralDeclaration_7; }
+		
+		//'3'
+		public Keyword getMin3Keyword_7_0() { return cMin3Keyword_7_0; }
+		
+		//h='H'
+		public EnumLiteralDeclaration getHEnumLiteralDeclaration_8() { return cHEnumLiteralDeclaration_8; }
+		
+		//'H'
+		public Keyword getHHKeyword_8_0() { return cHHKeyword_8_0; }
+		
+		//h='4'
+		public EnumLiteralDeclaration getHEnumLiteralDeclaration_9() { return cHEnumLiteralDeclaration_9; }
+		
+		//'4'
+		public Keyword getH4Keyword_9_0() { return cH4Keyword_9_0; }
+	}
+	public class AngleUnitElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.AngleUnit");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cRadianEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cRadianRadianKeyword_0_0 = (Keyword)cRadianEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cRadianEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cRadian0Keyword_1_0 = (Keyword)cRadianEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cDegreeEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cDegreeDegreeKeyword_2_0 = (Keyword)cDegreeEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cDegreeEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cDegree1Keyword_3_0 = (Keyword)cDegreeEnumLiteralDeclaration_3.eContents().get(0);
+		
+		//enum AngleUnit:
+		//	radian='Radian' | radian='0' |
+		//	degree='Degree' | degree='1';
+		public EnumRule getRule() { return rule; }
+		
+		//radian='Radian' | radian='0' | degree='Degree' | degree='1'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//radian='Radian'
+		public EnumLiteralDeclaration getRadianEnumLiteralDeclaration_0() { return cRadianEnumLiteralDeclaration_0; }
+		
+		//'Radian'
+		public Keyword getRadianRadianKeyword_0_0() { return cRadianRadianKeyword_0_0; }
+		
+		//radian='0'
+		public EnumLiteralDeclaration getRadianEnumLiteralDeclaration_1() { return cRadianEnumLiteralDeclaration_1; }
+		
+		//'0'
+		public Keyword getRadian0Keyword_1_0() { return cRadian0Keyword_1_0; }
+		
+		//degree='Degree'
+		public EnumLiteralDeclaration getDegreeEnumLiteralDeclaration_2() { return cDegreeEnumLiteralDeclaration_2; }
+		
+		//'Degree'
+		public Keyword getDegreeDegreeKeyword_2_0() { return cDegreeDegreeKeyword_2_0; }
+		
+		//degree='1'
+		public EnumLiteralDeclaration getDegreeEnumLiteralDeclaration_3() { return cDegreeEnumLiteralDeclaration_3; }
+		
+		//'1'
+		public Keyword getDegree1Keyword_3_0() { return cDegree1Keyword_3_0; }
+	}
+	public class VelocityUnitElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.VelocityUnit");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cMm_per_sEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cMm_per_sMm_per_sKeyword_0_0 = (Keyword)cMm_per_sEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cMm_per_sEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cMm_per_s0Keyword_1_0 = (Keyword)cMm_per_sEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cCm_per_sEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cCm_per_sCm_per_sKeyword_2_0 = (Keyword)cCm_per_sEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cCm_per_sEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cCm_per_s1Keyword_3_0 = (Keyword)cCm_per_sEnumLiteralDeclaration_3.eContents().get(0);
+		
+		//enum VelocityUnit:
+		//	mm_per_s='Mm_per_s' | mm_per_s='0' |
+		//	cm_per_s='Cm_per_s' | cm_per_s='1';
+		public EnumRule getRule() { return rule; }
+		
+		//mm_per_s='Mm_per_s' | mm_per_s='0' | cm_per_s='Cm_per_s' | cm_per_s='1'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//mm_per_s='Mm_per_s'
+		public EnumLiteralDeclaration getMm_per_sEnumLiteralDeclaration_0() { return cMm_per_sEnumLiteralDeclaration_0; }
+		
+		//'Mm_per_s'
+		public Keyword getMm_per_sMm_per_sKeyword_0_0() { return cMm_per_sMm_per_sKeyword_0_0; }
+		
+		//mm_per_s='0'
+		public EnumLiteralDeclaration getMm_per_sEnumLiteralDeclaration_1() { return cMm_per_sEnumLiteralDeclaration_1; }
+		
+		//'0'
+		public Keyword getMm_per_s0Keyword_1_0() { return cMm_per_s0Keyword_1_0; }
+		
+		//cm_per_s='Cm_per_s'
+		public EnumLiteralDeclaration getCm_per_sEnumLiteralDeclaration_2() { return cCm_per_sEnumLiteralDeclaration_2; }
+		
+		//'Cm_per_s'
+		public Keyword getCm_per_sCm_per_sKeyword_2_0() { return cCm_per_sCm_per_sKeyword_2_0; }
+		
+		//cm_per_s='1'
+		public EnumLiteralDeclaration getCm_per_sEnumLiteralDeclaration_3() { return cCm_per_sEnumLiteralDeclaration_3; }
+		
+		//'1'
+		public Keyword getCm_per_s1Keyword_3_0() { return cCm_per_s1Keyword_3_0; }
+	}
+	public class LengthUnitElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.LengthUnit");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cMmEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cMmMmKeyword_0_0 = (Keyword)cMmEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cMmEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cMm0Keyword_1_0 = (Keyword)cMmEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cCmEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cCmCmKeyword_2_0 = (Keyword)cCmEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cCmEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cCm1Keyword_3_0 = (Keyword)cCmEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cMEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cMMKeyword_4_0 = (Keyword)cMEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cMEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cM2Keyword_5_0 = (Keyword)cMEnumLiteralDeclaration_5.eContents().get(0);
+		
+		//enum LengthUnit:
+		//	mm='Mm' | mm='0' |
+		//	cm='Cm' | cm='1' |
+		//	m='M' | m='2';
+		public EnumRule getRule() { return rule; }
+		
+		//mm='Mm' | mm='0' | cm='Cm' | cm='1' | m='M' | m='2'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//mm='Mm'
+		public EnumLiteralDeclaration getMmEnumLiteralDeclaration_0() { return cMmEnumLiteralDeclaration_0; }
+		
+		//'Mm'
+		public Keyword getMmMmKeyword_0_0() { return cMmMmKeyword_0_0; }
+		
+		//mm='0'
+		public EnumLiteralDeclaration getMmEnumLiteralDeclaration_1() { return cMmEnumLiteralDeclaration_1; }
+		
+		//'0'
+		public Keyword getMm0Keyword_1_0() { return cMm0Keyword_1_0; }
+		
+		//cm='Cm'
+		public EnumLiteralDeclaration getCmEnumLiteralDeclaration_2() { return cCmEnumLiteralDeclaration_2; }
+		
+		//'Cm'
+		public Keyword getCmCmKeyword_2_0() { return cCmCmKeyword_2_0; }
+		
+		//cm='1'
+		public EnumLiteralDeclaration getCmEnumLiteralDeclaration_3() { return cCmEnumLiteralDeclaration_3; }
+		
+		//'1'
+		public Keyword getCm1Keyword_3_0() { return cCm1Keyword_3_0; }
+		
+		//m='M'
+		public EnumLiteralDeclaration getMEnumLiteralDeclaration_4() { return cMEnumLiteralDeclaration_4; }
+		
+		//'M'
+		public Keyword getMMKeyword_4_0() { return cMMKeyword_4_0; }
+		
+		//m='2'
+		public EnumLiteralDeclaration getMEnumLiteralDeclaration_5() { return cMEnumLiteralDeclaration_5; }
+		
+		//'2'
+		public Keyword getM2Keyword_5_0() { return cM2Keyword_5_0; }
+	}
+	public class ComparisonOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "at.ac.tuwien.big.Roverml.ComparisonOperator");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cSmallerEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cSmallerSmallerKeyword_0_0 = (Keyword)cSmallerEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cSmallerEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cSmaller0Keyword_1_0 = (Keyword)cSmallerEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cEqualsEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cEqualsEqualsKeyword_2_0 = (Keyword)cEqualsEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cEqualsEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cEquals1Keyword_3_0 = (Keyword)cEqualsEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cGreaterEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cGreaterGreaterKeyword_4_0 = (Keyword)cGreaterEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cGreaterEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cGreater2Keyword_5_0 = (Keyword)cGreaterEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cUnequalEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cUnequalUnequalKeyword_6_0 = (Keyword)cUnequalEnumLiteralDeclaration_6.eContents().get(0);
+		private final EnumLiteralDeclaration cUnequalEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
+		private final Keyword cUnequal3Keyword_7_0 = (Keyword)cUnequalEnumLiteralDeclaration_7.eContents().get(0);
+		
+		//enum ComparisonOperator:
+		//	smaller='Smaller' | smaller='0' |
+		//	equals='Equals' | equals='1' |
+		//	greater='Greater' | greater='2' |
+		//	unequal='Unequal' | unequal='3';
+		public EnumRule getRule() { return rule; }
+		
+		//smaller='Smaller' | smaller='0' | equals='Equals' | equals='1' | greater='Greater' | greater='2' | unequal='Unequal' |
+		//unequal='3'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//smaller='Smaller'
+		public EnumLiteralDeclaration getSmallerEnumLiteralDeclaration_0() { return cSmallerEnumLiteralDeclaration_0; }
+		
+		//'Smaller'
+		public Keyword getSmallerSmallerKeyword_0_0() { return cSmallerSmallerKeyword_0_0; }
+		
+		//smaller='0'
+		public EnumLiteralDeclaration getSmallerEnumLiteralDeclaration_1() { return cSmallerEnumLiteralDeclaration_1; }
+		
+		//'0'
+		public Keyword getSmaller0Keyword_1_0() { return cSmaller0Keyword_1_0; }
+		
+		//equals='Equals'
+		public EnumLiteralDeclaration getEqualsEnumLiteralDeclaration_2() { return cEqualsEnumLiteralDeclaration_2; }
+		
+		//'Equals'
+		public Keyword getEqualsEqualsKeyword_2_0() { return cEqualsEqualsKeyword_2_0; }
+		
+		//equals='1'
+		public EnumLiteralDeclaration getEqualsEnumLiteralDeclaration_3() { return cEqualsEnumLiteralDeclaration_3; }
+		
+		//'1'
+		public Keyword getEquals1Keyword_3_0() { return cEquals1Keyword_3_0; }
+		
+		//greater='Greater'
+		public EnumLiteralDeclaration getGreaterEnumLiteralDeclaration_4() { return cGreaterEnumLiteralDeclaration_4; }
+		
+		//'Greater'
+		public Keyword getGreaterGreaterKeyword_4_0() { return cGreaterGreaterKeyword_4_0; }
+		
+		//greater='2'
+		public EnumLiteralDeclaration getGreaterEnumLiteralDeclaration_5() { return cGreaterEnumLiteralDeclaration_5; }
+		
+		//'2'
+		public Keyword getGreater2Keyword_5_0() { return cGreater2Keyword_5_0; }
+		
+		//unequal='Unequal'
+		public EnumLiteralDeclaration getUnequalEnumLiteralDeclaration_6() { return cUnequalEnumLiteralDeclaration_6; }
+		
+		//'Unequal'
+		public Keyword getUnequalUnequalKeyword_6_0() { return cUnequalUnequalKeyword_6_0; }
+		
+		//unequal='3'
+		public EnumLiteralDeclaration getUnequalEnumLiteralDeclaration_7() { return cUnequalEnumLiteralDeclaration_7; }
+		
+		//'3'
+		public Keyword getUnequal3Keyword_7_0() { return cUnequal3Keyword_7_0; }
+	}
 	
+	private final NamedElementElements pNamedElement;
+	private final RoverProgramElements pRoverProgram;
+	private final CommandElements pCommand;
+	private final MoveElements pMove;
+	private final SetLightColorElements pSetLightColor;
+	private final RotateElements pRotate;
+	private final WaitElements pWait;
+	private final RepeatElements pRepeat;
+	private final ColorElements eColor;
+	private final RoverElements pRover;
+	private final BlockElements pBlock;
+	private final TransitionElements pTransition;
+	private final TriggeredTransitionElements pTriggeredTransition;
+	private final GPSElements pGPS;
+	private final DistanceSensorElements pDistanceSensor;
+	private final CompassElements pCompass;
+	private final SingleQuantityElements pSingleQuantity;
+	private final TimeUnitElements eTimeUnit;
+	private final TimeElements pTime;
+	private final AngleElements pAngle;
+	private final VelocityElements pVelocity;
+	private final LightElements pLight;
+	private final AngleUnitElements eAngleUnit;
+	private final VelocityUnitElements eVelocityUnit;
+	private final LengthElements pLength;
+	private final LengthUnitElements eLengthUnit;
+	private final ComparisonOperatorElements eComparisonOperator;
+	private final SensorElements pSensor;
+	private final MotorElements pMotor;
+	private final TerminateElements pTerminate;
+	private final ComponentElements pComponent;
+	private final ActuatorElements pActuator;
 	private final RoverSystemElements pRoverSystem;
+	private final DistanceSensorTriggerElements pDistanceSensorTrigger;
+	private final GpsTriggerElements pGpsTrigger;
+	private final CompassTriggerElements pCompassTrigger;
+	private final QuantityElements pQuantity;
+	private final PositionElements pPosition;
 	private final QualifiedNameElements pQualifiedName;
 	private final EStringElements pEString;
 	private final EFloatElements pEFloat;
@@ -175,7 +1792,44 @@ public class RovermlGrammarAccess extends AbstractGrammarElementFinder {
 			TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
+		this.pNamedElement = new NamedElementElements();
+		this.pRoverProgram = new RoverProgramElements();
+		this.pCommand = new CommandElements();
+		this.pMove = new MoveElements();
+		this.pSetLightColor = new SetLightColorElements();
+		this.pRotate = new RotateElements();
+		this.pWait = new WaitElements();
+		this.pRepeat = new RepeatElements();
+		this.eColor = new ColorElements();
+		this.pRover = new RoverElements();
+		this.pBlock = new BlockElements();
+		this.pTransition = new TransitionElements();
+		this.pTriggeredTransition = new TriggeredTransitionElements();
+		this.pGPS = new GPSElements();
+		this.pDistanceSensor = new DistanceSensorElements();
+		this.pCompass = new CompassElements();
+		this.pSingleQuantity = new SingleQuantityElements();
+		this.eTimeUnit = new TimeUnitElements();
+		this.pTime = new TimeElements();
+		this.pAngle = new AngleElements();
+		this.pVelocity = new VelocityElements();
+		this.pLight = new LightElements();
+		this.eAngleUnit = new AngleUnitElements();
+		this.eVelocityUnit = new VelocityUnitElements();
+		this.pLength = new LengthElements();
+		this.eLengthUnit = new LengthUnitElements();
+		this.eComparisonOperator = new ComparisonOperatorElements();
+		this.pSensor = new SensorElements();
+		this.pMotor = new MotorElements();
+		this.pTerminate = new TerminateElements();
+		this.pComponent = new ComponentElements();
+		this.pActuator = new ActuatorElements();
 		this.pRoverSystem = new RoverSystemElements();
+		this.pDistanceSensorTrigger = new DistanceSensorTriggerElements();
+		this.pGpsTrigger = new GpsTriggerElements();
+		this.pCompassTrigger = new CompassTriggerElements();
+		this.pQuantity = new QuantityElements();
+		this.pPosition = new PositionElements();
 		this.pQualifiedName = new QualifiedNameElements();
 		this.pEString = new EStringElements();
 		this.pEFloat = new EFloatElements();
@@ -209,15 +1863,468 @@ public class RovermlGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
+	//NamedElement:
+	//	Rover | RoverProgram | Component | Command;
+	public NamedElementElements getNamedElementAccess() {
+		return pNamedElement;
+	}
+	
+	public ParserRule getNamedElementRule() {
+		return getNamedElementAccess().getRule();
+	}
+	
+	//RoverProgram:
+	//	{RoverProgram}
+	//	'roverProgram'
+	//	block=Block;
+	public RoverProgramElements getRoverProgramAccess() {
+		return pRoverProgram;
+	}
+	
+	public ParserRule getRoverProgramRule() {
+		return getRoverProgramAccess().getRule();
+	}
+	
+	//Command:
+	//	Move | Rotate | Wait | SetLightColor | Terminate | Repeat
+	//	'command'
+	//	incoming+=[Transition|QualifiedName] '>'
+	//	outgoing+=[Transition|QualifiedName];
+	public CommandElements getCommandAccess() {
+		return pCommand;
+	}
+	
+	public ParserRule getCommandRule() {
+		return getCommandAccess().getRule();
+	}
+	
+	//Move:
+	//	'move'
+	//	'{'
+	//	speed=Velocity
+	//	distance=Length
+	//	'}';
+	public MoveElements getMoveAccess() {
+		return pMove;
+	}
+	
+	public ParserRule getMoveRule() {
+		return getMoveAccess().getRule();
+	}
+	
+	//SetLightColor:
+	//	'setLightColor'
+	//	'{'
+	//	'color' color=Color
+	//	lights+=[Light|QualifiedName]
+	//	'}';
+	public SetLightColorElements getSetLightColorAccess() {
+		return pSetLightColor;
+	}
+	
+	public ParserRule getSetLightColorRule() {
+		return getSetLightColorAccess().getRule();
+	}
+	
+	//Rotate:
+	//	'rotate'
+	//	'{'
+	//	angle=Angle
+	//	'}';
+	public RotateElements getRotateAccess() {
+		return pRotate;
+	}
+	
+	public ParserRule getRotateRule() {
+		return getRotateAccess().getRule();
+	}
+	
+	//Wait:
+	//	'wait'
+	//	'{'
+	//	duration=Time
+	//	'}';
+	public WaitElements getWaitAccess() {
+		return pWait;
+	}
+	
+	public ParserRule getWaitRule() {
+		return getWaitAccess().getRule();
+	}
+	
+	//Repeat:
+	//	{Repeat}
+	//	'repeat'
+	//	'{'
+	//	'count' count=EInt
+	//	'}';
+	public RepeatElements getRepeatAccess() {
+		return pRepeat;
+	}
+	
+	public ParserRule getRepeatRule() {
+		return getRepeatAccess().getRule();
+	}
+	
+	//enum Color:
+	//	none='None' | none='0' |
+	//	red='move' | red='1' |
+	//	green='Green' | green='2' |
+	//	blue='Blue' | blue='3' |
+	//	yellow='Yellow' | yellow='4';
+	public ColorElements getColorAccess() {
+		return eColor;
+	}
+	
+	public EnumRule getColorRule() {
+		return getColorAccess().getRule();
+	}
+	
+	//Rover:
+	//	{Rover}
+	//	'rover'
+	//	components+=Component*;
+	public RoverElements getRoverAccess() {
+		return pRover;
+	}
+	
+	public ParserRule getRoverRule() {
+		return getRoverAccess().getRule();
+	}
+	
+	//Block:
+	//	Repeat | {Block}
+	//	'block'
+	//	'{'
+	//	commands+=Command*
+	//	transitions+=Transition*
+	//	'}';
+	public BlockElements getBlockAccess() {
+		return pBlock;
+	}
+	
+	public ParserRule getBlockRule() {
+		return getBlockAccess().getRule();
+	}
+	
+	//Transition:
+	//	TriggeredTransition | {Transition}
+	//	'transition'
+	//	source=[Command|QualifiedName] '>'
+	//	target=[Command|QualifiedName];
+	public TransitionElements getTransitionAccess() {
+		return pTransition;
+	}
+	
+	public ParserRule getTransitionRule() {
+		return getTransitionAccess().getRule();
+	}
+	
+	//TriggeredTransition:
+	//	DistanceSensorTrigger | GpsTrigger | CompassTrigger
+	//	'triggeredTransition' ('sensor' sensor=[Sensor|QualifiedName])?
+	//	'operator' operator=ComparisonOperator ('comparisonValue' comparisonValue=Quantity)?;
+	public TriggeredTransitionElements getTriggeredTransitionAccess() {
+		return pTriggeredTransition;
+	}
+	
+	public ParserRule getTriggeredTransitionRule() {
+		return getTriggeredTransitionAccess().getRule();
+	}
+	
+	//GPS:
+	//	{GPS}
+	//	'gps';
+	public GPSElements getGPSAccess() {
+		return pGPS;
+	}
+	
+	public ParserRule getGPSRule() {
+		return getGPSAccess().getRule();
+	}
+	
+	//DistanceSensor:
+	//	{DistanceSensor}
+	//	'DistanceSensor';
+	public DistanceSensorElements getDistanceSensorAccess() {
+		return pDistanceSensor;
+	}
+	
+	public ParserRule getDistanceSensorRule() {
+		return getDistanceSensorAccess().getRule();
+	}
+	
+	//Compass Sensor:
+	//	{Compass}
+	//	'Compass';
+	public CompassElements getCompassAccess() {
+		return pCompass;
+	}
+	
+	public ParserRule getCompassRule() {
+		return getCompassAccess().getRule();
+	}
+	
+	//SingleQuantity:
+	//	Time | Velocity | Angle | Length
+	//	'SingleQuantity'
+	//	'{'
+	//	'value' value=EFloat
+	//	'}';
+	public SingleQuantityElements getSingleQuantityAccess() {
+		return pSingleQuantity;
+	}
+	
+	public ParserRule getSingleQuantityRule() {
+		return getSingleQuantityAccess().getRule();
+	}
+	
+	//enum TimeUnit:
+	//	ns='Ns' | ns='0' |
+	//	ms='Ms' | ms='1' |
+	//	s='S' | s='2' |
+	//	min='Min' | min='3' |
+	//	h='H' | h='4';
+	public TimeUnitElements getTimeUnitAccess() {
+		return eTimeUnit;
+	}
+	
+	public EnumRule getTimeUnitRule() {
+		return getTimeUnitAccess().getRule();
+	}
+	
+	//Time:
+	//	'timeUnit' timeUnit=TimeUnit;
+	public TimeElements getTimeAccess() {
+		return pTime;
+	}
+	
+	public ParserRule getTimeRule() {
+		return getTimeAccess().getRule();
+	}
+	
+	//Angle:
+	//	'angleUnit' angleUnit=AngleUnit;
+	public AngleElements getAngleAccess() {
+		return pAngle;
+	}
+	
+	public ParserRule getAngleRule() {
+		return getAngleAccess().getRule();
+	}
+	
+	//Velocity:
+	//	'velocityUnit' velocityUnit=VelocityUnit;
+	public VelocityElements getVelocityAccess() {
+		return pVelocity;
+	}
+	
+	public ParserRule getVelocityRule() {
+		return getVelocityAccess().getRule();
+	}
+	
+	//Light:
+	//	{Light}
+	//	'light';
+	public LightElements getLightAccess() {
+		return pLight;
+	}
+	
+	public ParserRule getLightRule() {
+		return getLightAccess().getRule();
+	}
+	
+	//enum AngleUnit:
+	//	radian='Radian' | radian='0' |
+	//	degree='Degree' | degree='1';
+	public AngleUnitElements getAngleUnitAccess() {
+		return eAngleUnit;
+	}
+	
+	public EnumRule getAngleUnitRule() {
+		return getAngleUnitAccess().getRule();
+	}
+	
+	//enum VelocityUnit:
+	//	mm_per_s='Mm_per_s' | mm_per_s='0' |
+	//	cm_per_s='Cm_per_s' | cm_per_s='1';
+	public VelocityUnitElements getVelocityUnitAccess() {
+		return eVelocityUnit;
+	}
+	
+	public EnumRule getVelocityUnitRule() {
+		return getVelocityUnitAccess().getRule();
+	}
+	
+	//Length:
+	//	'length'
+	//	'{'
+	//	'lengthUnit' lengthUnit=LengthUnit
+	//	'}';
+	public LengthElements getLengthAccess() {
+		return pLength;
+	}
+	
+	public ParserRule getLengthRule() {
+		return getLengthAccess().getRule();
+	}
+	
+	//enum LengthUnit:
+	//	mm='Mm' | mm='0' |
+	//	cm='Cm' | cm='1' |
+	//	m='M' | m='2';
+	public LengthUnitElements getLengthUnitAccess() {
+		return eLengthUnit;
+	}
+	
+	public EnumRule getLengthUnitRule() {
+		return getLengthUnitAccess().getRule();
+	}
+	
+	//enum ComparisonOperator:
+	//	smaller='Smaller' | smaller='0' |
+	//	equals='Equals' | equals='1' |
+	//	greater='Greater' | greater='2' |
+	//	unequal='Unequal' | unequal='3';
+	public ComparisonOperatorElements getComparisonOperatorAccess() {
+		return eComparisonOperator;
+	}
+	
+	public EnumRule getComparisonOperatorRule() {
+		return getComparisonOperatorAccess().getRule();
+	}
+	
+	//Sensor:
+	//	GPS | DistanceSensor | Compass
+	//	'sensor'
+	//	'{'
+	//	lastSensedValue=Quantity
+	//	'}';
+	public SensorElements getSensorAccess() {
+		return pSensor;
+	}
+	
+	public ParserRule getSensorRule() {
+		return getSensorAccess().getRule();
+	}
+	
+	//Motor:
+	//	{Motor}
+	//	'motor';
+	public MotorElements getMotorAccess() {
+		return pMotor;
+	}
+	
+	public ParserRule getMotorRule() {
+		return getMotorAccess().getRule();
+	}
+	
+	//Terminate:
+	//	{Terminate}
+	//	'terminate';
+	public TerminateElements getTerminateAccess() {
+		return pTerminate;
+	}
+	
+	public ParserRule getTerminateRule() {
+		return getTerminateAccess().getRule();
+	}
+	
+	//Component:
+	//	Actuator | Sensor
+	//	'component'
+	//	'{'
+	//	'kind' kind=EString
+	//	'}';
+	public ComponentElements getComponentAccess() {
+		return pComponent;
+	}
+	
+	public ParserRule getComponentRule() {
+		return getComponentAccess().getRule();
+	}
+	
+	//Actuator:
+	//	Light | Motor
+	//	'actuator';
+	public ActuatorElements getActuatorAccess() {
+		return pActuator;
+	}
+	
+	public ParserRule getActuatorRule() {
+		return getActuatorAccess().getRule();
+	}
+	
 	//RoverSystem:
 	//	{RoverSystem}
-	//	'roverSystem';
+	//	'roverSystem'
+	//	'{'
+	//	rovers+=Rover*
+	//	roverPrograms+=RoverProgram*
+	//	'}';
 	public RoverSystemElements getRoverSystemAccess() {
 		return pRoverSystem;
 	}
 	
 	public ParserRule getRoverSystemRule() {
 		return getRoverSystemAccess().getRule();
+	}
+	
+	//DistanceSensorTrigger:
+	//	{DistanceSensorTrigger}
+	//	'DistanceSensorTrigger';
+	public DistanceSensorTriggerElements getDistanceSensorTriggerAccess() {
+		return pDistanceSensorTrigger;
+	}
+	
+	public ParserRule getDistanceSensorTriggerRule() {
+		return getDistanceSensorTriggerAccess().getRule();
+	}
+	
+	//GpsTrigger:
+	//	{GpsTrigger}
+	//	'GpsTrigger';
+	public GpsTriggerElements getGpsTriggerAccess() {
+		return pGpsTrigger;
+	}
+	
+	public ParserRule getGpsTriggerRule() {
+		return getGpsTriggerAccess().getRule();
+	}
+	
+	//CompassTrigger:
+	//	{CompassTrigger}
+	//	'CompassTrigger';
+	public CompassTriggerElements getCompassTriggerAccess() {
+		return pCompassTrigger;
+	}
+	
+	public ParserRule getCompassTriggerRule() {
+		return getCompassTriggerAccess().getRule();
+	}
+	
+	//Quantity:
+	//	Position | SingleQuantity
+	//	'quantity';
+	public QuantityElements getQuantityAccess() {
+		return pQuantity;
+	}
+	
+	public ParserRule getQuantityRule() {
+		return getQuantityAccess().getRule();
+	}
+	
+	//Position:
+	//	{Position}
+	//	'position'
+	//	'{' ('x' x=Length) ('y' y=Length)
+	//	'}';
+	public PositionElements getPositionAccess() {
+		return pPosition;
+	}
+	
+	public ParserRule getPositionRule() {
+		return getPositionAccess().getRule();
 	}
 	
 	//QualifiedName:

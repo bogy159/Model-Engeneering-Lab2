@@ -27,7 +27,7 @@ public class RovermlParser extends AbstractAntlrParser {
 
 	@Override 
 	protected String getDefaultRuleName() {
-		return "RoverSystem";
+		return "NamedElement";
 	}
 
 	public RovermlGrammarAccess getGrammarAccess() {

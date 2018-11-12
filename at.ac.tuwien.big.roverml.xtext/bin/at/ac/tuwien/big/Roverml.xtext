@@ -9,11 +9,13 @@ NamedElement returns NamedElement:
 
 RoverProgram returns RoverProgram:
 	{RoverProgram}
+	'roverProgram'
 	block=Block		
 ;
 
 Command returns Command:
 	Move | Rotate | Wait | SetLightColor| Terminate | Repeat	
+	'command'
 	incoming+=[Transition|QualifiedName] '>'
 		outgoing+=[Transition|QualifiedName]		
 ;
@@ -36,16 +38,24 @@ SetLightColor returns SetLightColor:
 
 Rotate returns Rotate:
 	'rotate'
+	'{'
 	angle=Angle
+	'}'
 ;
 
 Wait returns Wait:
 	'wait'
+	'{'
 	duration=Time
+	'}'
 ;
 
 Repeat returns Repeat:
-	'count' count=EInt	
+	{Repeat}
+	'repeat'
+	'{'
+		'count' count=EInt	
+	'}'
 ;
 
 enum Color:	
@@ -58,57 +68,55 @@ enum Color:
 
 Rover returns Rover:
 	{Rover}
+	'rover'
 	(components+=Component)*
 ;
 
 Block returns Block:
 	Repeat | {Block}
-	'repeat'	
+	'block'	
+	'{'
 	(commands+=Command)*
 	(transitions+=Transition)*
+	'}'
 ;
 
 Transition returns Transition:
 	TriggeredTransition | {Transition}
+	'transition'
 	source=[Command|QualifiedName] '>'
 		target=[Command|QualifiedName]
 ;
 
 TriggeredTransition returns TriggeredTransition:
 	DistanceSensorTrigger | GpsTrigger | CompassTrigger
+	'triggeredTransition'
 	('sensor' sensor=[Sensor|QualifiedName])?
 	'operator' operator=ComparisonOperator
 	('comparisonValue' comparisonValue=Quantity)?
 ;
 
-QuantityType returns Quantity:
-	
-;
-
-SensorType returns Sensor:
-	
-;
-
-SensorQuantityType returns Sensor:
-	SensorType
-	
-;
-
 GPS returns GPS:
 	{GPS}
+	'gps'
 ;
 
 DistanceSensor returns DistanceSensor:
 	{DistanceSensor}
+	'DistanceSensor'
 ;
 
 Compass returns Sensor:
 	{Compass}
+	'Compass'
 ;
 
 SingleQuantity returns SingleQuantity:
 	Time | Velocity | Angle | Length
+	'SingleQuantity'
+	'{'
 	'value' value=EFloat
+	'}'
 ;
 
 enum TimeUnit:	
@@ -133,6 +141,7 @@ Velocity returns Velocity:
 
 Light returns Light:
 	{Light}
+	'light'
 ;
 
 enum AngleUnit:
@@ -146,7 +155,10 @@ enum VelocityUnit:
 ;
 
 Length returns Length:
+	'length'
+	'{'
 	'lengthUnit' lengthUnit=LengthUnit
+	'}'
 ;
 
 enum LengthUnit:
@@ -164,52 +176,71 @@ enum ComparisonOperator:
 
 Sensor returns Sensor:
 	GPS | DistanceSensor | Compass
-	lastSensedValue=QuantityType
+	'sensor'
+	'{'
+	lastSensedValue=Quantity
+	'}'
 ;
 
 Motor returns Motor:
 	{Motor}
+	'motor'
 ;
 
 Terminate returns Terminate:
 	{Terminate}
+	'terminate'
 ;
 
 Component returns Component:
-	SensorQuantityType | Actuator | Sensor
+	Actuator | Sensor
+	'component'
+	'{'
 	'kind' kind=EString
+	'}'
 ;
 
 Actuator returns Actuator:
 	Light | Motor	
+	'actuator'
 ;
 
 RoverSystem returns RoverSystem:
 	{RoverSystem}
+	'roverSystem'
+	'{'
 		(rovers+=Rover)*
-		(roverPrograms+=RoverProgram)*		
+		(roverPrograms+=RoverProgram)*	
+	'}'	
 ;
 
 DistanceSensorTrigger returns DistanceSensorTrigger:
 	{DistanceSensorTrigger}
+	'DistanceSensorTrigger'
 ;
 
 GpsTrigger returns GpsTrigger:
 	{GpsTrigger}
+	'GpsTrigger'
 ;
 
 CompassTrigger returns CompassTrigger:
 	{CompassTrigger}
+	'CompassTrigger'
 ;
 
 Quantity returns Quantity:
-	QuantityType | Position | SingleQuantity	
+	Position | SingleQuantity	
+	'quantity'
 ;
 
 Position returns Position:
 	{Position}
+	'position'
+	'{'
 	('x' x=Length)
 	('y' y=Length)
+	'}'
 ;
 
 QualifiedName returns ecore::EString:
