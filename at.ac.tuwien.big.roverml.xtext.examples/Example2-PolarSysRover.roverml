@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ASCII"?>
+<at.ac.tuwien.big.roverml:RoverSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:at.ac.tuwien.big.roverml="http://www.big.tuwien.ac.at/roverml">
+  <rovers name="polarSysRover">
+    <components xsi:type="at.ac.tuwien.big.roverml:Compass" name="digitalCompass" kind="digital"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:DistanceSensor" name="frontSensor" kind="proximitySensor"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:DistanceSensor" name="backSensor" kind="proximitySensor"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:DistanceSensor" name="leftSensor" kind="proximitySensor"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:DistanceSensor" name="rightSensor" kind="proximitySensor"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:GPS" name="gpsSensor"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Light" name="frontLight"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Light" name="backLight"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Motor" name="leftMotor"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Motor" name="rightMotor"/>
+  </rovers>
+  <roverPrograms name="travelBetweenObstacles" rover="//@rovers.0">
+    <block>
+      <commands xsi:type="at.ac.tuwien.big.roverml:SetLightColor" name="setBackLightColorGreen" color="green" lights="//@rovers.0/@components.7"/>
+      <commands xsi:type="at.ac.tuwien.big.roverml:Move" name="moveForward">
+        <speed value="30.0"/>
+        <distance value="3.0" lengthUnit="cm"/>
+      </commands>
+      <commands xsi:type="at.ac.tuwien.big.roverml:SetLightColor" name="setBackLightColorRed" color="red" lights="//@rovers.0/@components.7"/>
+      <commands xsi:type="at.ac.tuwien.big.roverml:Rotate" name="turnAround">
+        <angle value="180.0" angleUnit="degree"/>
+      </commands>
+      <transitions source="//@roverPrograms.0/@block/@commands.0" target="//@roverPrograms.0/@block/@commands.1"/>
+      <transitions xsi:type="at.ac.tuwien.big.roverml:DistanceSensorTrigger" source="//@roverPrograms.0/@block/@commands.1" target="//@roverPrograms.0/@block/@commands.1" sensor="//@rovers.0/@components.1" operator="greater">
+        <comparisonValue xsi:type="at.ac.tuwien.big.roverml:Length" value="4.0" lengthUnit="cm"/>
+      </transitions>
+      <transitions xsi:type="at.ac.tuwien.big.roverml:DistanceSensorTrigger" source="//@roverPrograms.0/@block/@commands.1" target="//@roverPrograms.0/@block/@commands.2" sensor="//@rovers.0/@components.1">
+        <comparisonValue xsi:type="at.ac.tuwien.big.roverml:Length" value="4.0" lengthUnit="cm"/>
+      </transitions>
+      <transitions source="//@roverPrograms.0/@block/@commands.2" target="//@roverPrograms.0/@block/@commands.3"/>
+      <transitions source="//@roverPrograms.0/@block/@commands.3" target="//@roverPrograms.0/@block/@commands.0"/>
+    </block>
+  </roverPrograms>
+  <roverPrograms name="testFrontLight" rover="//@rovers.0">
+    <block>
+      <commands xsi:type="at.ac.tuwien.big.roverml:SetLightColor" name="setFrontLightColorGreen" color="green" lights="//@rovers.0/@components.6"/>
+      <commands xsi:type="at.ac.tuwien.big.roverml:SetLightColor" name="setFrontLightColorBlue" color="blue" lights="//@rovers.0/@components.6"/>
+      <commands xsi:type="at.ac.tuwien.big.roverml:SetLightColor" name="setFrontLightColorRed" color="red" lights="//@rovers.0/@components.6"/>
+      <commands xsi:type="at.ac.tuwien.big.roverml:SetLightColor" name="setFrontLightColorYellow" color="yellow" lights="//@rovers.0/@components.6"/>
+      <commands xsi:type="at.ac.tuwien.big.roverml:SetLightColor" name="turnOffFrontLight" lights="//@rovers.0/@components.6"/>
+      <transitions source="//@roverPrograms.1/@block/@commands.0" target="//@roverPrograms.1/@block/@commands.1"/>
+      <transitions source="//@roverPrograms.1/@block/@commands.1" target="//@roverPrograms.1/@block/@commands.2"/>
+      <transitions source="//@roverPrograms.1/@block/@commands.2" target="//@roverPrograms.1/@block/@commands.3"/>
+      <transitions source="//@roverPrograms.1/@block/@commands.3" target="//@roverPrograms.1/@block/@commands.4"/>
+    </block>
+  </roverPrograms>
+</at.ac.tuwien.big.roverml:RoverSystem>

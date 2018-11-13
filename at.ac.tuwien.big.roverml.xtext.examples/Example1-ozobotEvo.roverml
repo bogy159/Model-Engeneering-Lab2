@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ASCII"?>
+<at.ac.tuwien.big.roverml:RoverSystem xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:at.ac.tuwien.big.roverml="http://www.big.tuwien.ac.at/roverml">
+  <rovers name="ozobotEvo">
+    <components xsi:type="at.ac.tuwien.big.roverml:Motor" name="leftMotor"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Motor" name="rightMotor"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:DistanceSensor" name="sensor" kind="proximitySensor"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Light" name="topLight" kind="LED"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Light" name="frontLight1" kind="LED"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Light" name="frontLight2" kind="LED"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Light" name="frontLight3" kind="LED"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Light" name="frontLight4" kind="LED"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Light" name="frontLight5" kind="LED"/>
+  </rovers>
+  <rovers name="ozobotBit">
+    <components xsi:type="at.ac.tuwien.big.roverml:Motor" name="leftMotor"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Motor" name="rightMotor"/>
+    <components xsi:type="at.ac.tuwien.big.roverml:Light" name="mainLight"/>
+  </rovers>
+  <roverPrograms name="squareWalk" rover="//@rovers.0">
+    <block xsi:type="at.ac.tuwien.big.roverml:Repeat" count="4">
+      <commands xsi:type="at.ac.tuwien.big.roverml:SetLightColor" name="setTopLightColorGreen" color="green" lights="//@rovers.0/@components.3"/>
+      <commands xsi:type="at.ac.tuwien.big.roverml:Move" name="moveForward">
+        <speed value="1.0" velocityUnit="cm_per_s"/>
+        <distance value="4.0" lengthUnit="cm"/>
+      </commands>
+      <commands xsi:type="at.ac.tuwien.big.roverml:SetLightColor" name="setTopLightColorRed" color="red" lights="//@rovers.0/@components.3"/>
+      <commands xsi:type="at.ac.tuwien.big.roverml:Rotate" name="rotateRight">
+        <angle value="90.0" angleUnit="degree"/>
+      </commands>
+      <transitions source="//@roverPrograms.0/@block/@commands.0" target="//@roverPrograms.0/@block/@commands.1"/>
+      <transitions source="//@roverPrograms.0/@block/@commands.1" target="//@roverPrograms.0/@block/@commands.2"/>
+      <transitions source="//@roverPrograms.0/@block/@commands.2" target="//@roverPrograms.0/@block/@commands.3"/>
+    </block>
+  </roverPrograms>
+</at.ac.tuwien.big.roverml:RoverSystem>
