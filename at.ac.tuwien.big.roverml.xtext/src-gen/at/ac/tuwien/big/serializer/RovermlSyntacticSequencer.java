@@ -21,26 +21,44 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class RovermlSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected RovermlGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Compass_CommaKeyword_3_q;
-	protected AbstractElementAlias match_Component_CommaKeyword_1_2_q;
-	protected AbstractElementAlias match_Component___LeftParenthesisKeyword_1_1_0_RightParenthesisKeyword_1_1_2__q;
-	protected AbstractElementAlias match_DistanceSensor_CommaKeyword_3_q;
+	protected AbstractElementAlias match_Block___CommandsKeyword_1_4_0_LeftCurlyBracketKeyword_1_4_1_RightCurlyBracketKeyword_1_4_3__q;
+	protected AbstractElementAlias match_Block___TransitionsKeyword_1_5_0_LeftCurlyBracketKeyword_1_5_1_RightCurlyBracketKeyword_1_5_3__q;
+	protected AbstractElementAlias match_Compass_CommaKeyword_4_q;
+	protected AbstractElementAlias match_Compass___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q;
+	protected AbstractElementAlias match_DistanceSensor_CommaKeyword_4_q;
+	protected AbstractElementAlias match_DistanceSensor___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q;
 	protected AbstractElementAlias match_GPS_CommaKeyword_3_q;
-	protected AbstractElementAlias match_Light_CommaKeyword_3_q;
+	protected AbstractElementAlias match_Light_CommaKeyword_4_q;
+	protected AbstractElementAlias match_Light___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q;
 	protected AbstractElementAlias match_Motor_CommaKeyword_3_q;
+	protected AbstractElementAlias match_Move_CommaKeyword_6_q;
+	protected AbstractElementAlias match_Rotate_CommaKeyword_4_q;
+	protected AbstractElementAlias match_RoverProgram_CommaKeyword_8_q;
 	protected AbstractElementAlias match_Rover_CommaKeyword_9_q;
+	protected AbstractElementAlias match_SetLightColor_CommaKeyword_10_q;
+	protected AbstractElementAlias match_Transition_CommaKeyword_4_q;
+	protected AbstractElementAlias match_Wait_CommaKeyword_4_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (RovermlGrammarAccess) access;
-		match_Compass_CommaKeyword_3_q = new TokenAlias(false, true, grammarAccess.getCompassAccess().getCommaKeyword_3());
-		match_Component_CommaKeyword_1_2_q = new TokenAlias(false, true, grammarAccess.getComponentAccess().getCommaKeyword_1_2());
-		match_Component___LeftParenthesisKeyword_1_1_0_RightParenthesisKeyword_1_1_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getComponentAccess().getLeftParenthesisKeyword_1_1_0()), new TokenAlias(false, false, grammarAccess.getComponentAccess().getRightParenthesisKeyword_1_1_2()));
-		match_DistanceSensor_CommaKeyword_3_q = new TokenAlias(false, true, grammarAccess.getDistanceSensorAccess().getCommaKeyword_3());
+		match_Block___CommandsKeyword_1_4_0_LeftCurlyBracketKeyword_1_4_1_RightCurlyBracketKeyword_1_4_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getBlockAccess().getCommandsKeyword_1_4_0()), new TokenAlias(false, false, grammarAccess.getBlockAccess().getLeftCurlyBracketKeyword_1_4_1()), new TokenAlias(false, false, grammarAccess.getBlockAccess().getRightCurlyBracketKeyword_1_4_3()));
+		match_Block___TransitionsKeyword_1_5_0_LeftCurlyBracketKeyword_1_5_1_RightCurlyBracketKeyword_1_5_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getBlockAccess().getTransitionsKeyword_1_5_0()), new TokenAlias(false, false, grammarAccess.getBlockAccess().getLeftCurlyBracketKeyword_1_5_1()), new TokenAlias(false, false, grammarAccess.getBlockAccess().getRightCurlyBracketKeyword_1_5_3()));
+		match_Compass_CommaKeyword_4_q = new TokenAlias(false, true, grammarAccess.getCompassAccess().getCommaKeyword_4());
+		match_Compass___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getCompassAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getCompassAccess().getRightParenthesisKeyword_3_2()));
+		match_DistanceSensor_CommaKeyword_4_q = new TokenAlias(false, true, grammarAccess.getDistanceSensorAccess().getCommaKeyword_4());
+		match_DistanceSensor___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getDistanceSensorAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getDistanceSensorAccess().getRightParenthesisKeyword_3_2()));
 		match_GPS_CommaKeyword_3_q = new TokenAlias(false, true, grammarAccess.getGPSAccess().getCommaKeyword_3());
-		match_Light_CommaKeyword_3_q = new TokenAlias(false, true, grammarAccess.getLightAccess().getCommaKeyword_3());
+		match_Light_CommaKeyword_4_q = new TokenAlias(false, true, grammarAccess.getLightAccess().getCommaKeyword_4());
+		match_Light___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getLightAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getLightAccess().getRightParenthesisKeyword_3_2()));
 		match_Motor_CommaKeyword_3_q = new TokenAlias(false, true, grammarAccess.getMotorAccess().getCommaKeyword_3());
+		match_Move_CommaKeyword_6_q = new TokenAlias(false, true, grammarAccess.getMoveAccess().getCommaKeyword_6());
+		match_Rotate_CommaKeyword_4_q = new TokenAlias(false, true, grammarAccess.getRotateAccess().getCommaKeyword_4());
+		match_RoverProgram_CommaKeyword_8_q = new TokenAlias(false, true, grammarAccess.getRoverProgramAccess().getCommaKeyword_8());
 		match_Rover_CommaKeyword_9_q = new TokenAlias(false, true, grammarAccess.getRoverAccess().getCommaKeyword_9());
+		match_SetLightColor_CommaKeyword_10_q = new TokenAlias(false, true, grammarAccess.getSetLightColorAccess().getCommaKeyword_10());
+		match_Transition_CommaKeyword_4_q = new TokenAlias(false, true, grammarAccess.getTransitionAccess().getCommaKeyword_4());
+		match_Wait_CommaKeyword_4_q = new TokenAlias(false, true, grammarAccess.getWaitAccess().getCommaKeyword_4());
 	}
 	
 	@Override
@@ -55,35 +73,68 @@ public class RovermlSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Compass_CommaKeyword_3_q.equals(syntax))
-				emit_Compass_CommaKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Component_CommaKeyword_1_2_q.equals(syntax))
-				emit_Component_CommaKeyword_1_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Component___LeftParenthesisKeyword_1_1_0_RightParenthesisKeyword_1_1_2__q.equals(syntax))
-				emit_Component___LeftParenthesisKeyword_1_1_0_RightParenthesisKeyword_1_1_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_DistanceSensor_CommaKeyword_3_q.equals(syntax))
-				emit_DistanceSensor_CommaKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_Block___CommandsKeyword_1_4_0_LeftCurlyBracketKeyword_1_4_1_RightCurlyBracketKeyword_1_4_3__q.equals(syntax))
+				emit_Block___CommandsKeyword_1_4_0_LeftCurlyBracketKeyword_1_4_1_RightCurlyBracketKeyword_1_4_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Block___TransitionsKeyword_1_5_0_LeftCurlyBracketKeyword_1_5_1_RightCurlyBracketKeyword_1_5_3__q.equals(syntax))
+				emit_Block___TransitionsKeyword_1_5_0_LeftCurlyBracketKeyword_1_5_1_RightCurlyBracketKeyword_1_5_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Compass_CommaKeyword_4_q.equals(syntax))
+				emit_Compass_CommaKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Compass___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q.equals(syntax))
+				emit_Compass___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_DistanceSensor_CommaKeyword_4_q.equals(syntax))
+				emit_DistanceSensor_CommaKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_DistanceSensor___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q.equals(syntax))
+				emit_DistanceSensor___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_GPS_CommaKeyword_3_q.equals(syntax))
 				emit_GPS_CommaKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Light_CommaKeyword_3_q.equals(syntax))
-				emit_Light_CommaKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Light_CommaKeyword_4_q.equals(syntax))
+				emit_Light_CommaKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Light___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q.equals(syntax))
+				emit_Light___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Motor_CommaKeyword_3_q.equals(syntax))
 				emit_Motor_CommaKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Move_CommaKeyword_6_q.equals(syntax))
+				emit_Move_CommaKeyword_6_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Rotate_CommaKeyword_4_q.equals(syntax))
+				emit_Rotate_CommaKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_RoverProgram_CommaKeyword_8_q.equals(syntax))
+				emit_RoverProgram_CommaKeyword_8_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Rover_CommaKeyword_9_q.equals(syntax))
 				emit_Rover_CommaKeyword_9_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_SetLightColor_CommaKeyword_10_q.equals(syntax))
+				emit_SetLightColor_CommaKeyword_10_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Transition_CommaKeyword_4_q.equals(syntax))
+				emit_Transition_CommaKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Wait_CommaKeyword_4_q.equals(syntax))
+				emit_Wait_CommaKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
 	/**
 	 * Ambiguous syntax:
-	 *     ','?
+	 *     ('commands' '{' '}')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     name=ID (ambiguity) '{' lastSensedValue=Quantity
-	 *     name=ID (ambiguity) (rule end)
+	 *     (rule start) 'block' '{' (ambiguity) 'transitions' '{' transitions+=Transition
+	 *     (rule start) 'block' '{' (ambiguity) ('transitions' '{' '}')? '}' (rule start)
+	 *     commands+=Repeat '{' (ambiguity) 'transitions' '{' transitions+=Transition
+	 *     commands+=Repeat '{' (ambiguity) ('transitions' '{' '}')? '}' (rule end)
 	 */
-	protected void emit_Compass_CommaKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Block___CommandsKeyword_1_4_0_LeftCurlyBracketKeyword_1_4_1_RightCurlyBracketKeyword_1_4_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('transitions' '{' '}')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) 'block' '{' ('commands' '{' '}')? (ambiguity) '}' (rule start)
+	 *     commands+=Command '}' (ambiguity) '}' (rule end)
+	 *     commands+=Repeat '{' ('commands' '{' '}')? (ambiguity) '}' (rule end)
+	 */
+	protected void emit_Block___TransitionsKeyword_1_5_0_LeftCurlyBracketKeyword_1_5_1_RightCurlyBracketKeyword_1_5_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -93,10 +144,11 @@ public class RovermlSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     kind=EString ')' (ambiguity) (rule end)
-	 *     lastSensedValue=Quantity '}' ('(' ')')? (ambiguity) (rule end)
-	 *     name=ID ','? ('(' ')')? (ambiguity) (rule end)
+	 *     kind=EString ')' (ambiguity) lastSensedValue=Quantity
+	 *     name=ID ('(' ')')? (ambiguity) (rule end)
+	 *     name=ID ('(' ')')? (ambiguity) lastSensedValue=Quantity
 	 */
-	protected void emit_Component_CommaKeyword_1_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Compass_CommaKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -105,10 +157,10 @@ public class RovermlSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ('(' ')')?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     lastSensedValue=Quantity '}' (ambiguity) ','? (rule end)
-	 *     name=ID ','? (ambiguity) ','? (rule end)
+	 *     name=ID (ambiguity) ','? (rule end)
+	 *     name=ID (ambiguity) ','? lastSensedValue=Quantity
 	 */
-	protected void emit_Component___LeftParenthesisKeyword_1_1_0_RightParenthesisKeyword_1_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Compass___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -117,11 +169,21 @@ public class RovermlSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ','?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     name=ID (ambiguity) '(' 'kind' kind=EString
-	 *     name=ID (ambiguity) ('(' ')')? ','? (rule end)
-	 *     name=ID (ambiguity) (rule end)
+	 *     kind=EString ')' (ambiguity) (rule end)
+	 *     name=ID ('(' ')')? (ambiguity) (rule end)
 	 */
-	protected void emit_DistanceSensor_CommaKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_DistanceSensor_CommaKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('(' ')')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     name=ID (ambiguity) ','? (rule end)
+	 */
+	protected void emit_DistanceSensor___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -130,8 +192,6 @@ public class RovermlSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ','?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     name=ID (ambiguity) '(' 'kind' kind=EString
-	 *     name=ID (ambiguity) ('(' ')')? ','? (rule end)
 	 *     name=ID (ambiguity) (rule end)
 	 */
 	protected void emit_GPS_CommaKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -143,9 +203,21 @@ public class RovermlSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ','?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     name=ID (ambiguity) (rule end)
+	 *     kind=EString ')' (ambiguity) (rule end)
+	 *     name=ID ('(' ')')? (ambiguity) (rule end)
 	 */
-	protected void emit_Light_CommaKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Light_CommaKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('(' ')')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     name=ID (ambiguity) ','? (rule end)
+	 */
+	protected void emit_Light___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -165,10 +237,76 @@ public class RovermlSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ','?
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     speed=Velocity (ambiguity) (rule end)
+	 */
+	protected void emit_Move_CommaKeyword_6_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ','?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     angle=Angle (ambiguity) (rule end)
+	 */
+	protected void emit_Rotate_CommaKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ','?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     block=Block '}' (ambiguity) (rule end)
+	 */
+	protected void emit_RoverProgram_CommaKeyword_8_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ','?
+	 *
+	 * This ambiguous syntax occurs at:
 	 *     components+=Component '}' '}' (ambiguity) (rule end)
 	 *     name=ID '{' 'components' '{' '}' '}' (ambiguity) (rule end)
 	 */
 	protected void emit_Rover_CommaKeyword_9_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ','?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     color=Color (ambiguity) (rule end)
+	 */
+	protected void emit_SetLightColor_CommaKeyword_10_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ','?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     target=[Command|QualifiedName] (ambiguity) (rule end)
+	 */
+	protected void emit_Transition_CommaKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ','?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     duration=Time (ambiguity) (rule end)
+	 */
+	protected void emit_Wait_CommaKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

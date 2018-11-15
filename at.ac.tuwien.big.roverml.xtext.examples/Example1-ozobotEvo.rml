@@ -29,7 +29,7 @@ roverSystem {
 					setTopLightColorGreen: set lights (topLight) to color green,
 					moveForward: move 4.0 cm with 1.0 cm_per_s,
 					setTopLightColorRed: set lights (topLight) to color red,
-					rotateRight: rotate 90.0 degrees
+					rotateRight: rotate 90.0 degree
 				} 
 				transitions {
 					setTopLightColorGreen > moveForward,

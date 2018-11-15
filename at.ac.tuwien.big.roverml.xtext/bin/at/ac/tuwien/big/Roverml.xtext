@@ -10,12 +10,13 @@ RoverSystem returns RoverSystem:
 		'rovers' 
 		'{'
 		 (rovers+=Rover)*
-		 '}'
+		 '}'		 
 		 'roverPrograms' 
 		'{'
 		 (roverPrograms+=RoverProgram)*	
 		'}'
 	'}'	
+	
 ;
 
 NamedElement returns NamedElement:
@@ -26,62 +27,70 @@ RoverProgram returns RoverProgram:
 	{RoverProgram}
 	'roverProgram' name=ID
 	'{'
+	'rover' rover=[Rover|QualifiedName]
 	block=Block		
 	'}'
+	(',')?
 ;
 
 Command returns Command:
 	Move | Rotate | Wait | SetLightColor| Terminate | Repeat	
-	'command'
+	
 	incoming+=[Transition|QualifiedName] '>'
-		outgoing+=[Transition|QualifiedName]		
-		//(',')?
+		outgoing+=[Transition|QualifiedName]	
 ;
 
 Move returns Move:
+	name=ID
+	':'
 	'move'
-	'{'
-		speed=Velocity
-		distance=Length		
-	'}'
+	distance=Length	
+	'with'
+	speed=Velocity	
+	(',')?	
 ;
 
 SetLightColor returns SetLightColor:
-	'setLightColor'
-	'{'
-		'color' color=Color
+	name=ID
+	':'
+	'set'
+	'lights'
+	'('
 		lights+=[Light|QualifiedName]
-	'}'
+	')'
+	'to'
+	'color' color=Color		
+		(',')?		
 ;
 
 Rotate returns Rotate:
-	'rotate'
-	'{'
+	name=ID
+	':'
+	'rotate'	
 	angle=Angle
-	'}'
+		(',')?	
 ;
 
 Wait returns Wait:
-	'wait'
-	'{'
-	duration=Time
-	'}'
+	name=ID
+	':'
+	'wait'	
+	duration=Time	
+		(',')?	
 ;
 
 Repeat returns Repeat:
 	{Repeat}
-	'repeat'
-	'{'
-		'count' count=EInt	
-	'}'
+	'repeat' count=EInt		
+	'times'	
 ;
 
 enum Color:	
-	none = 'None' | none = '0' |
-	red = 'move' | red = '1' |
-	green = 'Green' | green = '2' |
-	blue = 'Blue' | blue = '3' |
-	yellow = 'Yellow' | yellow = '4' 
+	none = 'none' |
+	red = 'red' |
+	green = 'green' |
+	blue = 'blue' |
+	yellow = 'yellow' 
 ;
 
 Rover returns Rover:
@@ -98,26 +107,33 @@ Rover returns Rover:
 ;
 
 Block returns Block:
-	Repeat | {Block}
+	Repeat | {Block} 
 	'block'	
+	(commands+=Repeat)?
 	'{'
-	(commands+=Command)*
-	(transitions+=Transition)*
+	('commands'
+		'{'
+		(commands+=Command)*
+		'}'
+	)?
+	('transitions' 
+		'{'
+		(transitions+=Transition)*
+		'}'
+	)?
 	'}'
 ;
 
 Transition returns Transition:
-	TriggeredTransition | {Transition}
-	'transition'
+	(TriggeredTransition)?
 	source=[Command|QualifiedName] '>'
 		target=[Command|QualifiedName]
+		(',')?
 ;
 
 TriggeredTransition returns TriggeredTransition:
-	DistanceSensorTrigger | GpsTrigger | CompassTrigger
-	('sensor' sensor=[Sensor|QualifiedName])?
-	'operator' operator=ComparisonOperator
-	('comparisonValue' comparisonValue=Quantity)?
+	'if'
+	DistanceSensorTrigger | GpsTrigger | CompassTrigger	
 ;
 
 GPS returns GPS:
@@ -129,83 +145,99 @@ GPS returns GPS:
 DistanceSensor returns DistanceSensor:
 	{DistanceSensor}
 	'distanceSensor' name=ID
+	('('	
+	('kind' kind=EString)?	
+	')')?
 	(',')?
 ;
 
-Compass returns Sensor:
+Compass returns Compass:
 	{Compass}
 	'compass' name=ID
+	('('	
+	('kind' kind=EString)?	
+	')')?
 	(',')?
 ;
 
 SingleQuantity returns SingleQuantity:
 	Time | Velocity | Angle | Length	
-	'{'
-	'value' value=EFloat
-	'}'
+	//'{'
+	//'value' 
+	//value=EFloat
+	//'}'
 ;
 
 enum TimeUnit:	
-	ns = 'Ns' | ns = '0' |
-	ms = 'Ms' | ms = '1' |
-	s = 'S' | s = '2' |
-	min = 'Min' | min = '3' |
-	h = 'H' | h = '4' 
+	ns = 'ns' |
+	ms = 'ms' |
+	s = 's' |
+	min = 'min' |
+	h = 'h'
 ;
 
 Time returns Time:
-	'timeUnit' timeUnit=TimeUnit
+	//'timeUnit' 
+	value=EFloat
+	timeUnit=TimeUnit
 ;
 
 Angle returns Angle:
-	'angleUnit'angleUnit=AngleUnit
+	//'angleUnit'
+	value=EFloat
+	angleUnit=AngleUnit
 ;
 
 Velocity returns Velocity:
-	'velocityUnit' velocityUnit=VelocityUnit
+	//'velocityUnit' 
+	value=EFloat
+	velocityUnit=VelocityUnit
 ;
 
 Light returns Light:
 	{Light}
 	'light' name=ID 
+	('('
+	
+	('kind' kind=EString)?
+	
+	')')?
 	(',')?
 ;
 
 enum AngleUnit:
-	radian = 'Radian' | radian = '0' |
-	degree = 'Degree' | degree = '1' 
+	radian = 'radian' |
+	degree = 'degree'
 ;
 
 enum VelocityUnit:
-	mm_per_s = 'Mm_per_s' | mm_per_s = '0' |
-	cm_per_s = 'Cm_per_s' | cm_per_s = '1' 
+	mm_per_s = 'mm_per_s' |
+	cm_per_s = 'cm_per_s'
 ;
 
 Length returns Length:
-	'length'
-	'{'
-	'lengthUnit' lengthUnit=LengthUnit
-	'}'
+	value=EFloat 
+	lengthUnit=LengthUnit
 ;
 
 enum LengthUnit:
-	mm = 'Mm' | mm = '0' |
-	cm = 'Cm' | cm = '1' |
-	m = 'M' | m = '2' 
+	mm = 'mm' |
+	cm = 'cm' |
+	m = 'm'
 ;
 
 enum ComparisonOperator:
-	smaller = 'Smaller' | smaller = '0' |
-	equals = 'Equals' | equals = '1' |
-	greater = 'Greater' | greater = '2' |
-	unequal = 'Unequal' | unequal = '3' 
+	smaller = 'smaller' |
+	equals = 'equals' |
+	greater = 'greater' |
+	unequal = 'unequal'
 ;
 
 Sensor returns Sensor:
 	GPS | DistanceSensor | Compass	
-	'{'
-	lastSensedValue=Quantity
-	'}'
+	//'{'
+	(lastSensedValue=Quantity)?
+	//'}'
 ;
 
 Motor returns Motor:
@@ -222,12 +254,13 @@ Terminate returns Terminate:
 Component returns Component:
 	Actuator | Sensor
 	//'component'
-	('('
+	/*('('
 	
 	('kind' kind=EString)?
 	
-	')')?
-	(',')?
+	'),')?
+	*/
+	
 ;
 
 Actuator returns Actuator:
@@ -237,22 +270,31 @@ Actuator returns Actuator:
 
 DistanceSensorTrigger returns DistanceSensorTrigger:
 	{DistanceSensorTrigger}
-	'DistanceSensorTrigger'
+	sensor=[DistanceSensor|QualifiedName]
+	operator=ComparisonOperator
+	comparisonValue=Length
+	':'
 ;
 
 GpsTrigger returns GpsTrigger:
 	{GpsTrigger}
-	'GpsTrigger'
+	sensor=[GPS|QualifiedName]
+	operator=ComparisonOperator
+	comparisonValue=Position
+	':'
 ;
 
 CompassTrigger returns CompassTrigger:
 	{CompassTrigger}
-	'CompassTrigger'
+	sensor=[Compass|QualifiedName]
+	operator=ComparisonOperator
+	comparisonValue=Angle
+	':'
 ;
 
 Quantity returns Quantity:
 	Position | SingleQuantity	
-	'quantity'
+	//'quantity'
 ;
 
 Position returns Position:
