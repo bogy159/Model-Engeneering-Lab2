@@ -4,7 +4,39 @@
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="RoverML" initialisation="true" domainClass="roverml::RoverSystem" enablePopupBars="true">
       <defaultLayer name="Default">
         <containerMappings name="Rover" semanticCandidatesExpression="feature:rovers" domainClass="roverml::Rover">
-          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="3" labelSize="12" labelExpression="['Rover '+self.name/]" roundedCorner="true" widthComputationExpression="20" heightComputationExpression="50" backgroundStyle="GradientTopToBottom">
+          <subNodeMappings name="Component" semanticCandidatesExpression="feature:components" domainClass="roverml::Component">
+            <conditionnalStyles predicateExpression="[self.oclIsTypeOf(Motor)/]">
+              <style xsi:type="style:WorkspaceImageDescription" labelSize="12" hideLabelByDefault="true" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/at.ac.tuwien.big.roverml.design/images/motor.gif">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+            </conditionnalStyles>
+            <conditionnalStyles predicateExpression="[self.oclIsTypeOf(Light)/]">
+              <style xsi:type="style:WorkspaceImageDescription" labelSize="12" hideLabelByDefault="true" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/at.ac.tuwien.big.roverml.design/images/light.gif">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+            </conditionnalStyles>
+            <conditionnalStyles predicateExpression="[self.oclIsTypeOf(Compass)/]">
+              <style xsi:type="style:WorkspaceImageDescription" labelSize="12" hideLabelByDefault="true" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/at.ac.tuwien.big.roverml.design/images/compass.gif">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+            </conditionnalStyles>
+            <conditionnalStyles predicateExpression="[self.oclIsTypeOf(GPS)/]">
+              <style xsi:type="style:WorkspaceImageDescription" labelSize="12" hideLabelByDefault="true" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/at.ac.tuwien.big.roverml.design/images/gps.gif">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+            </conditionnalStyles>
+            <conditionnalStyles predicateExpression="[self.oclIsTypeOf(DistanceSensor)/]">
+              <style xsi:type="style:WorkspaceImageDescription" labelSize="12" hideLabelByDefault="true" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/at.ac.tuwien.big.roverml.design/images/distanceSensor.gif">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+            </conditionnalStyles>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="3" labelSize="12" labelExpression="['Rover '+self.name/]" iconPath="/at.ac.tuwien.big.roverml.design/icons/rover.gif" roundedCorner="true" widthComputationExpression="20" heightComputationExpression="50" backgroundStyle="GradientTopToBottom">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='green']"/>
             <labelFormat>bold</labelFormat>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_green']"/>
@@ -14,6 +46,14 @@
           </style>
         </containerMappings>
         <containerMappings name="RoverProgram" semanticCandidatesExpression="[eContents()/]" domainClass="roverml::RoverProgram">
+          <subContainerMappings name="Block" semanticCandidatesExpression="feature:eAllContents" domainClass="roverml::Block">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </subContainerMappings>
           <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="3" labelSize="12" showIcon="false" labelExpression="['Program '+self.name+' for Rover '+self.rover.name/]" roundedCorner="true" widthComputationExpression="70" heightComputationExpression="50">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_blue']"/>
             <labelFormat>bold</labelFormat>
@@ -32,6 +72,73 @@
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="roverml::Rover" referenceName="rovers">
                   <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="var:name"/>
                 </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Program" containerMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']" iconPath="/at.ac.tuwien.big.roverml.design/icons/roverprogram.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="roverml::RoverProgram" referenceName="roverPrograms">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="var:name"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Block" containerMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']" iconPath="/at.ac.tuwien.big.roverml.design/icons/block.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="roverml::Block" referenceName="block"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="RoverComponents">
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Motor" nodeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='Rover']/@subNodeMappings[name='Component']" iconPath="/at.ac.tuwien.big.roverml.design/icons/motor_micro.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="roverml::Motor" referenceName="components"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Light" nodeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='Rover']/@subNodeMappings[name='Component']" iconPath="/at.ac.tuwien.big.roverml.design/icons/light_micro.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="roverml::Light" referenceName="components"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Compass" nodeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='Rover']/@subNodeMappings[name='Component']" iconPath="/at.ac.tuwien.big.roverml.design/icons/compass_micro.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="roverml::Compass" referenceName="components"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="GPS" nodeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='Rover']/@subNodeMappings[name='Component']" iconPath="/at.ac.tuwien.big.roverml.design/icons/gps_micro.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="roverml::GPS" referenceName="components"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="DistanceSensor" nodeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='Rover']/@subNodeMappings[name='Component']" iconPath="/at.ac.tuwien.big.roverml.design/icons/distanceSensor_micro.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="roverml::DistanceSensor" referenceName="components"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>

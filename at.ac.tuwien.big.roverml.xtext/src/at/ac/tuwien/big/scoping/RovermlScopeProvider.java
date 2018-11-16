@@ -3,9 +3,27 @@
  */
 package at.ac.tuwien.big.scoping;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.Scopes;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 
+import at.ac.tuwien.big.roverml.Actuator;
 import at.ac.tuwien.big.roverml.Block;
+import at.ac.tuwien.big.roverml.Command;
+import at.ac.tuwien.big.roverml.Component;
+import at.ac.tuwien.big.roverml.Light;
+import at.ac.tuwien.big.roverml.Rover;
+import at.ac.tuwien.big.roverml.RoverProgram;
+import at.ac.tuwien.big.roverml.RoverSystem;
+import at.ac.tuwien.big.roverml.SetLightColor;
 import at.ac.tuwien.big.roverml.Transition;
 
 /**
@@ -25,6 +43,47 @@ public class RovermlScopeProvider extends AbstractDeclarativeScopeProvider {
 	 * SetLightColor command is used, the suggested lights should only be of the
 	 * rover referenced in the program defining the command.
 	 */
+	
+	public IScope scope_RoverProgram_setLightColor(RoverProgram roverProgram, EReference eReference) {
+		
+		return Scopes.scopeFor(getAllowedLights((RoverProgram) roverProgram.eContainer()));
+		//return Scopes.scopeFor(getAllowedLights((RoverProgram) roverProgram.eContainer()));
+		
+	}
+	
+	public List<Component> getAllowedLights(RoverProgram program) {
+		List<Component> allowedLights = new ArrayList<Component>();
+		
+		Rover rover = program.getRover();
+		List<Component> allRoverComponents = EcoreUtil2.getAllContentsOfType(rover, Component.class);
+		List<Component> allProgramComponents = EcoreUtil2.getAllContentsOfType(program, Component.class);
+		for (int i = 0; i < allRoverComponents.size(); i++) {
+			if (allProgramComponents.contains(allRoverComponents.get(i))) {
+				allowedLights.add(allRoverComponents.get(i));
+			}
+		}
+		
+		return allowedLights;
+		
+		//List<Component> allowedLights = new ArrayList<Component>();
+		
+		//RoverProgram rootContainer = (RoverProgram) EcoreUtil2.getRootContainer(program);
+		//Rover rover = program.getRover();
+		//Rover roverContainer = (Rover) rover.eContainer();
+		//List<Component> components = roverContainer.getComponents();
+		//List<Light> allContentsOfType = EcoreUtil2.getAllContentsOfType(roverContainer, Light.class);
+		//return components;
+		
+		/*List<Component> components = new ArrayList<Component>();
+		components = program.getRover().getComponents();
+		for (int i = 0; i < components.size(); i++) {
+			allowedLights.add(components.get(i).get);
+		}
+		
+		
+		return allowedLights;
+		*/
+	}
 
 	/**
 	 * TODO: Scoping for the source of a transition
