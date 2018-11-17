@@ -44,45 +44,22 @@ public class RovermlScopeProvider extends AbstractDeclarativeScopeProvider {
 	 * rover referenced in the program defining the command.
 	 */
 	
-	public IScope scope_RoverProgram_setLightColor(RoverProgram roverProgram, EReference eReference) {
-		
-		return Scopes.scopeFor(getAllowedLights((RoverProgram) roverProgram.eContainer()));
-		//return Scopes.scopeFor(getAllowedLights((RoverProgram) roverProgram.eContainer()));
+	IScope scope_Light(SetLightColor command, EReference reference) {
+		RoverProgram program = getProgram(command);
+		Rover rover = program.getRover();
+		return Scopes.scopeFor(getAllowedLights(rover));
 		
 	}
 	
-	public List<Component> getAllowedLights(RoverProgram program) {
-		List<Component> allowedLights = new ArrayList<Component>();
-		
-		Rover rover = program.getRover();
-		List<Component> allRoverComponents = EcoreUtil2.getAllContentsOfType(rover, Component.class);
-		List<Component> allProgramComponents = EcoreUtil2.getAllContentsOfType(program, Component.class);
-		for (int i = 0; i < allRoverComponents.size(); i++) {
-			if (allProgramComponents.contains(allRoverComponents.get(i))) {
-				allowedLights.add(allRoverComponents.get(i));
+	private List<Light> getAllowedLights(Rover rover) {
+		EList<Component> components = rover.getComponents();
+		ArrayList<Light> lights = new ArrayList<>();
+		for(Component comp : components){
+			if(comp instanceof Light) {
+				lights.add((Light) comp);
 			}
 		}
-		
-		return allowedLights;
-		
-		//List<Component> allowedLights = new ArrayList<Component>();
-		
-		//RoverProgram rootContainer = (RoverProgram) EcoreUtil2.getRootContainer(program);
-		//Rover rover = program.getRover();
-		//Rover roverContainer = (Rover) rover.eContainer();
-		//List<Component> components = roverContainer.getComponents();
-		//List<Light> allContentsOfType = EcoreUtil2.getAllContentsOfType(roverContainer, Light.class);
-		//return components;
-		
-		/*List<Component> components = new ArrayList<Component>();
-		components = program.getRover().getComponents();
-		for (int i = 0; i < components.size(); i++) {
-			allowedLights.add(components.get(i).get);
-		}
-		
-		
-		return allowedLights;
-		*/
+		return lights;
 	}
 
 	/**
@@ -99,6 +76,11 @@ public class RovermlScopeProvider extends AbstractDeclarativeScopeProvider {
 	 * The suggested commands (source and target) for transitions should only be the
 	 * ones defined in the same rover program and the same block as the transitions.
 	 */
+	
+	IScope scope_Command(Transition transition, EReference reference) {
+		Block block = getBlock(transition);
+		return Scopes.scopeFor(block.getCommands());
+	}
 
 	/**
 	 * GIVEN: Convenience function to retrieve the block of a transition.
@@ -108,6 +90,15 @@ public class RovermlScopeProvider extends AbstractDeclarativeScopeProvider {
 	 */
 	private Block getBlock(Transition transition) {
 		return (Block) transition.eContainer();
+	}
+	
+	private at.ac.tuwien.big.roverml.RoverProgram getProgram(EObject eObject) {
+		if (eObject instanceof at.ac.tuwien.big.roverml.RoverProgram) {
+			return (at.ac.tuwien.big.roverml.RoverProgram) eObject;
+		} else if (eObject.eContainer() != null) {
+			return getProgram(eObject.eContainer());
+		}
+		return null;
 	}
 
 }

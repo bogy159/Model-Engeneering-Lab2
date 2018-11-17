@@ -5,12 +5,22 @@
       <defaultLayer name="Default">
         <edgeMappings name="Transition" sourceMapping="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']" targetMapping="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="roverml::Transition" useDomainElement="true">
           <style sizeComputationExpression="2">
-            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='green']"/>
           </style>
         </edgeMappings>
-        <edgeMappings name="DistanceSensorTrigger" sourceMapping="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']" targetMapping="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="roverml::DistanceSensorTrigger" useDomainElement="true">
+        <edgeMappings name="DistanceSensorTrigger" label="Distance Sensor Trigger" sourceMapping="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']" targetMapping="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="roverml::DistanceSensorTrigger" useDomainElement="true">
           <style sizeComputationExpression="2">
-            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="CompassTrigger" label="Compass Trigger" sourceMapping="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']" targetMapping="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="roverml::CompassTrigger" useDomainElement="true">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="GPSTrigger" label="GPS Trigger" sourceMapping="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']" targetMapping="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="roverml::CompassTrigger" useDomainElement="true">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
           </style>
         </edgeMappings>
         <containerMappings name="Rover" semanticCandidatesExpression="feature:rovers" domainClass="roverml::Rover">
@@ -113,7 +123,7 @@
                 </style>
               </conditionnalStyles>
             </subNodeMappings>
-            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" showIcon="false">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" showIcon="false" labelExpression="">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
@@ -280,7 +290,55 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="DistanceSensorTransition" label="Distance Sensor Transition" edgeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@edgeMappings[name='DistanceSensorTrigger']" iconPath="/at.ac.tuwien.big.roverml.design/icons/trans_distSens.gif">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[self.eContainer()]">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="var:source"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="CompassTransition" label="Compass Transition" edgeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@edgeMappings[name='CompassTrigger']" iconPath="/at.ac.tuwien.big.roverml.design/icons/trans_Comp.gif">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[self.eContainer()]">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="var:source"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="GPSTransition" label="GPS Transition" edgeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@edgeMappings[name='GPSTrigger']" iconPath="/at.ac.tuwien.big.roverml.design/icons/trans_Gps.gif">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[self.eContainer()]">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="var:source"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
         </toolSections>
+        <toolSections name="Quantity"/>
+        <decorationDescriptionsSet>
+          <decorationDescriptions xsi:type="description_1:MappingBasedDecoration" name="CompassTransition" position="CENTER" imageExpression="/at.ac.tuwien.big.roverml.design/images/compass.gif" mappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@edgeMappings[name='CompassTrigger']"/>
+          <decorationDescriptions xsi:type="description_1:MappingBasedDecoration" name="DistanceSensorTransition" position="CENTER" imageExpression="/at.ac.tuwien.big.roverml.design/images/distanceSensor.gif" mappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@edgeMappings[name='DistanceSensorTrigger']"/>
+          <decorationDescriptions xsi:type="description_1:MappingBasedDecoration" name="GPSTransition" position="CENTER" imageExpression="/at.ac.tuwien.big.roverml.design/images/gps.gif" mappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@edgeMappings[name='GPSTrigger']"/>
+        </decorationDescriptionsSet>
       </defaultLayer>
     </ownedRepresentations>
     <ownedJavaExtensions qualifiedClassName="at.ac.tuwien.big.roverml.design.Services"/>
