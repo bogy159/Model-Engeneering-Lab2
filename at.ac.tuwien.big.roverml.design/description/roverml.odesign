@@ -64,10 +64,46 @@
             <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
             <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.1"/>
           </style>
+          <conditionnalStyles predicateExpression="[self.oclIsTypeOf(Rover)/]">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" iconPath="/at.ac.tuwien.big.roverml.design/images/curiosity_small.gif">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+            </style>
+          </conditionnalStyles>
         </containerMappings>
         <containerMappings name="RoverProgram" semanticCandidatesExpression="[eContents()/]" domainClass="roverml::RoverProgram">
           <subContainerMappings name="Block" semanticCandidatesExpression="feature:eAllContents" domainClass="roverml::Block">
             <subNodeMappings name="Command" semanticCandidatesExpression="feature:commands" domainClass="roverml::Command">
+              <borderedNodeMappings name="Velocity" semanticCandidatesExpression="feature:eAllContents" domainClass="roverml::Velocity">
+                <style xsi:type="style:DotDescription" showIcon="false" labelExpression="[self.value + ' '+ self.velocityUnit/]" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='purple']"/>
+                </style>
+              </borderedNodeMappings>
+              <borderedNodeMappings name="Angle" semanticCandidatesExpression="feature:eAllContents" domainClass="roverml::Angle">
+                <style xsi:type="style:DotDescription" showIcon="false" labelExpression="[self.value + ' '+ self.angleUnit/]" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+                </style>
+              </borderedNodeMappings>
+              <borderedNodeMappings name="Time" semanticCandidatesExpression="feature:eAllContents" domainClass="roverml::Time">
+                <style xsi:type="style:DotDescription" showIcon="false" labelExpression="[self.value + ' '+ self.timeUnit/]" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+                </style>
+              </borderedNodeMappings>
+              <borderedNodeMappings name="Length" semanticCandidatesExpression="feature:eAllContents" domainClass="roverml::Length">
+                <style xsi:type="style:DotDescription" showIcon="false" labelExpression="[self.value + ' '+ self.lengthUnit/]" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='orange']"/>
+                </style>
+              </borderedNodeMappings>
               <conditionnalStyles predicateExpression="[self.oclIsTypeOf(Move)/]">
                 <style xsi:type="style:WorkspaceImageDescription" showIcon="false" labelAlignment="RIGHT" hideLabelByDefault="true" sizeComputationExpression="-1" resizeKind="NSEW" workspacePath="/at.ac.tuwien.big.roverml.design/images/move.gif">
                   <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -123,12 +159,20 @@
                 </style>
               </conditionnalStyles>
             </subNodeMappings>
-            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" showIcon="false" labelExpression="">
-              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" showIcon="false" labelExpression="['Repeat ' + self.count + ' times'/]">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
               <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
             </style>
+            <conditionnalStyles predicateExpression="[self.oclIsTypeOf(Repeat)/]">
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelExpression="['Repeat ' + self.count + ' times'/]" labelAlignment="RIGHT">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              </style>
+            </conditionnalStyles>
           </subContainerMappings>
           <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="3" labelSize="12" showIcon="false" labelExpression="['Program '+self.name+' for Rover '+self.rover.name/]" roundedCorner="true" widthComputationExpression="70" heightComputationExpression="50">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_blue']"/>
@@ -229,12 +273,12 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:NodeCreationDescription" name="Repeat" nodeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']" iconPath="/at.ac.tuwien.big.roverml.design/icons/repeat_icon.gif">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Repeat" containerMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']" iconPath="/at.ac.tuwien.big.roverml.design/icons/repeat_icon.gif">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext">
-                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="roverml::Repeat" referenceName="commands"/>
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="roverml::Repeat" referenceName="repeat"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
@@ -333,7 +377,28 @@
             </initialOperation>
           </ownedTools>
         </toolSections>
-        <toolSections name="Quantity"/>
+        <toolSections name="Quantity">
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Velocity" nodeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']/@borderedNodeMappings[name='Velocity']" iconPath="/at.ac.tuwien.big.roverml.design/icons/velocity.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Angle" nodeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']/@borderedNodeMappings[name='Angle']" iconPath="/at.ac.tuwien.big.roverml.design/icons/angle.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Time" nodeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']/@borderedNodeMappings[name='Time']" iconPath="/at.ac.tuwien.big.roverml.design/icons/time.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Length" nodeMappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@containerMappings[name='RoverProgram']/@subContainerMappings[name='Block']/@subNodeMappings[name='Command']/@borderedNodeMappings[name='Length']" iconPath="/at.ac.tuwien.big.roverml.design/icons/length.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation/>
+          </ownedTools>
+        </toolSections>
         <decorationDescriptionsSet>
           <decorationDescriptions xsi:type="description_1:MappingBasedDecoration" name="CompassTransition" position="CENTER" imageExpression="/at.ac.tuwien.big.roverml.design/images/compass.gif" mappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@edgeMappings[name='CompassTrigger']"/>
           <decorationDescriptions xsi:type="description_1:MappingBasedDecoration" name="DistanceSensorTransition" position="CENTER" imageExpression="/at.ac.tuwien.big.roverml.design/images/distanceSensor.gif" mappings="//@ownedViewpoints[name='RoverMLViewPoint']/@ownedRepresentations[name='RoverML']/@defaultLayer/@edgeMappings[name='DistanceSensorTrigger']"/>
